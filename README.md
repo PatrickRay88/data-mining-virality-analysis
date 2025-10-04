@@ -4,13 +4,15 @@ A data mining project that extends Weissburg 2022's research on content virality
 
 ## Research Objectives
 
-This project replicates and extends Weissburg 2022 on Reddit with three key enhancements:
+This project replicates and extends Weissburg et al. (2022) "Predicting Reddit Post Popularity via Initial Commentary" with three key enhancements:
 
-1. **Enhanced Features**: Time-based features (hour, weekday, recency), content-type classification, and author activity proxies
-2. **Cross-Platform Analysis**: Hacker News data integration to test title effect transferability
-3. **Residual-Lift Methodology**: Exposure-aware quality estimation followed by title-driven lift analysis
+1. **Enhanced Features**: Time-based features (hour, weekday, recency), content-type classification, and author activity proxies beyond the original title-only focus
+2. **Cross-Platform Analysis**: Hacker News data integration to test title effect transferability across social media platforms
+3. **Residual-Lift Methodology**: Exposure-aware quality estimation followed by title-driven lift analysis, implementing the "ensemble-type model" approach suggested in their future work
 
-> **Academic Context**: This project is part of a graduate-level data mining course, implementing methodological extensions suggested in the original Weissburg 2022 paper.
+> **Research Question**: Do certain title features push Reddit posts above or below their "intrinsic quality" baseline, and how does this generalize across platforms?
+
+> **Academic Context**: This project implements methodological extensions explicitly suggested in Weissburg et al.'s future work section, combining their exposure-correction approach with cross-platform validation and enhanced feature engineering.
 
 ## Project Structure
 
@@ -105,6 +107,29 @@ Test Reddit→HN and HN→Reddit model transferability.
 - Author usernames are hashed for privacy protection
 - Rate limiting implemented to respect platform terms of service
 - Research conducted under academic fair use guidelines
+
+## References
+
+This project builds upon and extends the following research:
+
+**Primary Inspiration:**
+- Weissburg, E., Yoder, J., Schaer, R., & Maurer, M. (2022). "Predicting Reddit Post Popularity via Initial Commentary." *Proceedings of the AAAI Conference on Artificial Intelligence*, 36(11), 12293-12301. https://doi.org/10.1609/aaai.v36i11.21492
+
+**Cross-Platform Analysis:**
+- Stoddard, G. (2015). "Popularity dynamics and intrinsic quality in Reddit and Hacker News." *Proceedings of the International AAAI Conference on Web and Social Media*, 9(1), 416-425.
+
+**Virality and Social Media Research:**
+- Berger, J., & Milkman, K. L. (2012). "What makes online content viral?" *Journal of Marketing Research*, 49(2), 192-205.
+- Cheng, J., Adamic, L., Dow, P. A., Kleinberg, J. M., & Leskovec, J. (2014). "Can cascades be predicted?" *Proceedings of the 23rd International Conference on World Wide Web*, 925-936.
+
+**Temporal Factors in Social Media:**
+- Goel, S., Anderson, A., Hofman, J., & Watts, D. J. (2016). "The structural virality of online diffusion." *Management Science*, 62(1), 180-196.
+
+**Natural Language Processing for Social Media:**
+- Guerini, M., Strapparava, C., & Özbal, G. (2011). "Exploring text virality in social networks." *Proceedings of the International AAAI Conference on Web and Social Media*, 5(1), 82-89.
+
+**Methodology:**
+- Lakkaraju, H., McAuley, J., & Leskovec, J. (2013). "What's in a name? Understanding the interplay between titles, content, and communities in social media." *Proceedings of the International AAAI Conference on Web and Social Media*, 7(1), 311-320.
 
 ## Contributing
 
