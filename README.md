@@ -4,7 +4,7 @@ A data mining project that extends Weissburg 2022's research on content virality
 
 ## Research Objectives
 
-This project replicates and extends Weissburg et al. (2022) "Predicting Reddit Post Popularity via Initial Commentary" with three key enhancements:
+This project replicates and extends Weissburg et al. (2022) "Judging a Book by Its Cover: Predicting the Marginal Impact of Title on Reddit Post Popularity" with three key enhancements:
 
 1. **Enhanced Features**: Time-based features (hour, weekday, recency), content-type classification, and author activity proxies beyond the original title-only focus
 2. **Cross-Platform Analysis**: Hacker News data integration to test title effect transferability across social media platforms
@@ -113,7 +113,7 @@ Test Reddit→HN and HN→Reddit model transferability.
 This project builds upon and extends the following research:
 
 **Primary Inspiration:**
-- Weissburg, E., Yoder, J., Schaer, R., & Maurer, M. (2022). "Predicting Reddit Post Popularity via Initial Commentary." *Proceedings of the AAAI Conference on Artificial Intelligence*, 36(11), 12293-12301. https://doi.org/10.1609/aaai.v36i11.21492
+- Weissburg, E., Kumar, A., & Dhillon, P. S. (2022). "Judging a Book by Its Cover: Predicting the Marginal Impact of Title on Reddit Post Popularity." *Proceedings of the Sixteenth International AAAI Conference on Web and Social Media (ICWSM 2022)*.
 
 **Cross-Platform Analysis:**
 - Stoddard, G. (2015). "Popularity dynamics and intrinsic quality in Reddit and Hacker News." *Proceedings of the International AAAI Conference on Web and Social Media*, 9(1), 416-425.
