@@ -1,0 +1,43 @@
+{
+  "records": 13395,
+  "columns": [
+    "R",
+    "all_caps_words",
+    "capitalization_ratio",
+    "clickbait_keywords",
+    "clickbait_patterns",
+    "has_clickbait",
+    "has_exclamation",
+    "has_numbers",
+    "has_question",
+    "number_count",
+    "platform",
+    "post_id",
+    "score_15m",
+    "score_30m",
+    "score_5m",
+    "score_60m",
+    "sentiment_compound",
+    "sentiment_negative",
+    "sentiment_neutral",
+    "sentiment_positive",
+    "subreddit",
+    "title",
+    "title_chars_per_word",
+    "title_length",
+    "title_lift_component",
+    "title_words",
+    "y",
+    "yhat_A"
+  ],
+  "target_stats": {
+    "count": 13395.0,
+    "mean": 3.5092542426128297,
+    "std": 2.5350027351448716,
+    "min": 0.0,
+    "10%": 0.0,
+    "50%": 3.367295829986474,
+    "90%": 7.034035351664381,
+    "max": 11.0907515387988
+  }
+}

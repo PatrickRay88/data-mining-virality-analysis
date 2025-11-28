@@ -14,11 +14,11 @@ from datetime import datetime, timedelta
 import logging
 from pathlib import Path
 
-# Add src to Python path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Ensure project root on path for local package imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from ingest.hn_client import HackerNewsClient
-from preprocess.normalize import DataNormalizer
+from src.ingest.hn_client import HackerNewsClient
+from src.preprocess.normalize import DataNormalizer
 
 
 @click.command()

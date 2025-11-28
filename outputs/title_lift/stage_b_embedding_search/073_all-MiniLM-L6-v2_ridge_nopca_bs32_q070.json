@@ -1,0 +1,42 @@
+{
+  "train_rmse": 0.9365608585681007,
+  "test_rmse": 1.200993809009089,
+  "train_mae": 0.6860507747957825,
+  "test_mae": 0.9092435279110619,
+  "train_r2": 0.10047540286316614,
+  "test_r2": -0.010451303998719741,
+  "pairwise_accuracy": 0.5643401682439537,
+  "pairwise_pairs": 15216,
+  "n_train": 9376,
+  "n_test": 4019,
+  "split_time": "2025-11-12T00:33:19.800000+00:00",
+  "config": {
+    "split_quantile": 0.7,
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "batch_size": 32,
+    "use_pca": false,
+    "pca_components": 64,
+    "regressor": "ridge",
+    "ridge_alphas": [
+      0.01,
+      0.1,
+      1.0
+    ],
+    "elasticnet_l1_ratios": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "elasticnet_alphas": [
+      0.001,
+      0.01,
+      0.1
+    ],
+    "mlp_hidden_layers": [
+      256,
+      128
+    ],
+    "mlp_max_iter": 600,
+    "random_state": 42
+  }
+}

@@ -1,0 +1,1881 @@
+{
+  "stage_a": {
+    "train_rmse": 0.957016919434769,
+    "train_r2": 0.8756808278453473,
+    "test_rmse": 1.189972458252295,
+    "test_r2": 0.5770725073534886
+  },
+  "stage_b": {
+    "train_rmse": 0.9478371538293583,
+    "train_r2": 0.01909211630341956,
+    "test_rmse": 1.178278899563301,
+    "test_r2": -0.027639393499084175
+  },
+  "residual_summary": {
+    "residual_mean": 0.07651488138291754,
+    "residual_std": 1.029645858215655,
+    "residual_skew": 0.43682188816460576
+  },
+  "top_title_features": {
+    "sentiment_neutral": -6.72613629589308,
+    "sentiment_negative": -5.486461035666533,
+    "sentiment_positive": -4.888564985794077,
+    "title_chars_per_word": 0.5754548041271518,
+    "avg_word_length": -0.5443543667308843,
+    "title_words": 0.26064135159428836,
+    "title_length": -0.1625927683807418,
+    "sentiment_compound": -0.09793865857712308,
+    "sentiment_compound_offpeak": 0.062025983907374446,
+    "has_clickbait": -0.04895426418680499
+  },
+  "calibration": {
+    "stage_a": {
+      "hour_of_day": {
+        "0": 0.1293864350452681,
+        "1": -0.051804474994325896,
+        "2": 0.02955690761003271,
+        "3": 0.05869299612427114,
+        "4": 0.03437856792503011,
+        "5": 0.033953443098279114,
+        "6": 0.07410035278587629,
+        "7": 0.06406321973158395,
+        "8": -0.0014918580085993645,
+        "9": -0.018043056564734306,
+        "10": 0.03397184981486599,
+        "11": 0.07811782239191367,
+        "12": 0.08446813943887947,
+        "13": 0.07918397816254742,
+        "14": 0.09628977347468023,
+        "15": 0.07502876335922783,
+        "16": 0.11066081990616168,
+        "17": 0.09943601652206617,
+        "18": 0.060029270410421116,
+        "19": 0.05929932829904303,
+        "20": 0.1191729760735753,
+        "21": 0.1526381468403494,
+        "22": 0.12724675130198956,
+        "23": 0.06053394408405119
+      },
+      "subreddit": {
+        "Futurology": 0.05249610463186304,
+        "business": -0.0010788938251827054,
+        "economy": -0.0038502013477546993,
+        "energy": 0.004770742151846292,
+        "gadgets": 0.06945727552172844,
+        "politics": 0.1144000000428228,
+        "science": 0.16629730602681153,
+        "space": 0.004801677268156755,
+        "technews": 0.032771738497837,
+        "technology": 0.09430419167908712,
+        "worldnews": 0.100696061091588
+      }
+    },
+    "stage_b": [
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 0,
+        "actual_mean": -0.13263312112885225,
+        "pred_mean": 0.013790146392782324,
+        "count": 6.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 2,
+        "actual_mean": -0.7743127899712839,
+        "pred_mean": -0.1034196212891142,
+        "count": 3.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 3,
+        "actual_mean": 0.5054330048956237,
+        "pred_mean": -0.0253396723348783,
+        "count": 8.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 4,
+        "actual_mean": -0.49271127678090904,
+        "pred_mean": -0.1585003918218915,
+        "count": 3.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 5,
+        "actual_mean": 0.2989125880038731,
+        "pred_mean": -0.03506099129747939,
+        "count": 4.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 6,
+        "actual_mean": 0.5854252722161498,
+        "pred_mean": -0.06371330073302993,
+        "count": 7.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 7,
+        "actual_mean": -0.2544111553295051,
+        "pred_mean": -0.10591297327580211,
+        "count": 3.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 8,
+        "actual_mean": -0.26191865543675685,
+        "pred_mean": -0.058563108208995365,
+        "count": 5.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 9,
+        "actual_mean": -0.5931456894287076,
+        "pred_mean": -0.18570691614324458,
+        "count": 2.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 10,
+        "actual_mean": 0.30230289061730325,
+        "pred_mean": -0.0683867512225833,
+        "count": 7.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 11,
+        "actual_mean": 0.9401690574365267,
+        "pred_mean": -0.002550982743349553,
+        "count": 5.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 12,
+        "actual_mean": 0.2136702818995632,
+        "pred_mean": -0.029371905556251784,
+        "count": 17.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 13,
+        "actual_mean": -0.10601445932316872,
+        "pred_mean": -0.015567818537833386,
+        "count": 8.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 14,
+        "actual_mean": 0.6472722200441533,
+        "pred_mean": 0.0361671155471984,
+        "count": 5.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 15,
+        "actual_mean": -0.021969286871911617,
+        "pred_mean": -0.04415370297575673,
+        "count": 8.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 16,
+        "actual_mean": 1.4280172314663993,
+        "pred_mean": -0.04153130599845068,
+        "count": 6.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 17,
+        "actual_mean": 0.8307392480094645,
+        "pred_mean": -0.11252947343145792,
+        "count": 10.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 18,
+        "actual_mean": -0.2885924378516571,
+        "pred_mean": -0.06833128362252815,
+        "count": 6.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 19,
+        "actual_mean": 0.08067460343586991,
+        "pred_mean": -0.06394328562185425,
+        "count": 4.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 20,
+        "actual_mean": 0.12009625517074203,
+        "pred_mean": -0.0648005717584151,
+        "count": 6.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 21,
+        "actual_mean": -0.12045747740294081,
+        "pred_mean": -0.16792573219197102,
+        "count": 5.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 22,
+        "actual_mean": 0.06973590746044384,
+        "pred_mean": -0.10612021939872959,
+        "count": 8.0
+      },
+      {
+        "subreddit": "Futurology",
+        "hour_of_day": 23,
+        "actual_mean": 0.5694547372477847,
+        "pred_mean": -0.01521555392566897,
+        "count": 6.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 0,
+        "actual_mean": 0.14896449251235713,
+        "pred_mean": -0.11932125628407035,
+        "count": 6.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 1,
+        "actual_mean": -0.23412791826872303,
+        "pred_mean": -0.12751661753151305,
+        "count": 6.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 3,
+        "actual_mean": -0.15434312372398698,
+        "pred_mean": -0.10563083922609869,
+        "count": 6.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 4,
+        "actual_mean": -0.4896563305640422,
+        "pred_mean": -0.1374761951793154,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 5,
+        "actual_mean": -0.14193658587812993,
+        "pred_mean": -0.0962453419770261,
+        "count": 4.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 6,
+        "actual_mean": -0.31547253468101566,
+        "pred_mean": -0.03464046747161039,
+        "count": 1.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 7,
+        "actual_mean": 0.20802286029537886,
+        "pred_mean": -0.11422794989767715,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 8,
+        "actual_mean": -0.24490174184990962,
+        "pred_mean": -0.20621596948629017,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 9,
+        "actual_mean": -0.2659630178464505,
+        "pred_mean": -0.15196913809720825,
+        "count": 4.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 10,
+        "actual_mean": -0.32012973418943663,
+        "pred_mean": -0.14340794931535017,
+        "count": 7.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 11,
+        "actual_mean": -0.26610964929459746,
+        "pred_mean": -0.14835936994982576,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 12,
+        "actual_mean": -0.3314560735388157,
+        "pred_mean": -0.0917424054115373,
+        "count": 5.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 13,
+        "actual_mean": 0.17762167901115206,
+        "pred_mean": -0.11637483538785025,
+        "count": 5.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 14,
+        "actual_mean": -0.06172477853767622,
+        "pred_mean": -0.23430248944808973,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 15,
+        "actual_mean": 0.003501651385156469,
+        "pred_mean": -0.1032817052409797,
+        "count": 9.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 16,
+        "actual_mean": 1.035833342032576,
+        "pred_mean": -0.0630839727333901,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 17,
+        "actual_mean": 0.21598999301645233,
+        "pred_mean": -0.1612815325873779,
+        "count": 5.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 18,
+        "actual_mean": -0.39539071342386184,
+        "pred_mean": -0.0861814225340388,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 19,
+        "actual_mean": -0.1282143019041867,
+        "pred_mean": -0.11221298370083037,
+        "count": 1.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 20,
+        "actual_mean": -0.11864737710205397,
+        "pred_mean": -0.21789806591383745,
+        "count": 2.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 21,
+        "actual_mean": 0.4460608225861576,
+        "pred_mean": -0.20255152785873187,
+        "count": 8.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 22,
+        "actual_mean": 0.8615837843642096,
+        "pred_mean": -0.027623330372855512,
+        "count": 3.0
+      },
+      {
+        "subreddit": "business",
+        "hour_of_day": 23,
+        "actual_mean": -0.12774971184619102,
+        "pred_mean": -0.12841597764839477,
+        "count": 3.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 0,
+        "actual_mean": 0.05229067882070667,
+        "pred_mean": 0.19061216061880826,
+        "count": 24.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 1,
+        "actual_mean": -0.19921586056331778,
+        "pred_mean": -0.08446258031073964,
+        "count": 26.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 2,
+        "actual_mean": -0.1109266486390676,
+        "pred_mean": -0.030476241546317066,
+        "count": 15.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 3,
+        "actual_mean": -0.15599478094055824,
+        "pred_mean": -0.08352323349255703,
+        "count": 12.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 4,
+        "actual_mean": -0.27945598326442406,
+        "pred_mean": -0.009352592473679257,
+        "count": 18.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 5,
+        "actual_mean": 0.1599359869580319,
+        "pred_mean": -0.03514741956523097,
+        "count": 16.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 6,
+        "actual_mean": 0.06189231968131041,
+        "pred_mean": -0.05174798821349832,
+        "count": 14.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 7,
+        "actual_mean": 0.031248557408559446,
+        "pred_mean": 0.018654646224592664,
+        "count": 24.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 8,
+        "actual_mean": -0.27488001246564314,
+        "pred_mean": -0.02910677205669198,
+        "count": 7.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 9,
+        "actual_mean": -0.009623821517485047,
+        "pred_mean": -0.0589120766790437,
+        "count": 15.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 10,
+        "actual_mean": 0.15212057191788292,
+        "pred_mean": -0.07396255650795186,
+        "count": 16.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 11,
+        "actual_mean": -0.24970189677723378,
+        "pred_mean": 0.005929348500289565,
+        "count": 7.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 12,
+        "actual_mean": -0.07835470317055604,
+        "pred_mean": -0.024961057953544412,
+        "count": 29.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 13,
+        "actual_mean": 0.08927577922958026,
+        "pred_mean": 0.03797232419209556,
+        "count": 33.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 14,
+        "actual_mean": -0.3818973357956011,
+        "pred_mean": -0.02644442975076902,
+        "count": 33.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 15,
+        "actual_mean": -0.05658741623139625,
+        "pred_mean": 0.02909117214397417,
+        "count": 40.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 16,
+        "actual_mean": 0.3025071970655943,
+        "pred_mean": -0.011612769331152524,
+        "count": 29.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 17,
+        "actual_mean": -0.028870171542967175,
+        "pred_mean": -0.050925979159903975,
+        "count": 27.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 18,
+        "actual_mean": -0.07354752029444434,
+        "pred_mean": 0.04788929682463562,
+        "count": 34.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 19,
+        "actual_mean": -0.04385881740744263,
+        "pred_mean": -0.03272245858263586,
+        "count": 28.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 20,
+        "actual_mean": 0.14117749293352858,
+        "pred_mean": -0.003404927308283771,
+        "count": 31.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 21,
+        "actual_mean": 0.3449997241681504,
+        "pred_mean": -0.03784357790692335,
+        "count": 34.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 22,
+        "actual_mean": -0.2908678803001244,
+        "pred_mean": -0.06003863901312743,
+        "count": 11.0
+      },
+      {
+        "subreddit": "economy",
+        "hour_of_day": 23,
+        "actual_mean": 0.016411074568245376,
+        "pred_mean": -0.019086838543642414,
+        "count": 19.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 0,
+        "actual_mean": -0.2504503286516758,
+        "pred_mean": -0.08511064301807827,
+        "count": 5.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 1,
+        "actual_mean": -0.797877418740818,
+        "pred_mean": -0.05713610364957518,
+        "count": 2.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 2,
+        "actual_mean": -0.5789726994040341,
+        "pred_mean": 0.08150901085108812,
+        "count": 3.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 3,
+        "actual_mean": -0.5379950362819981,
+        "pred_mean": -0.007589779172939094,
+        "count": 6.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 4,
+        "actual_mean": -0.3552668414834517,
+        "pred_mean": -0.04363576142755285,
+        "count": 3.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 5,
+        "actual_mean": 0.41071577410938986,
+        "pred_mean": -0.1494410987803091,
+        "count": 1.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 6,
+        "actual_mean": 0.2979430105706129,
+        "pred_mean": -0.04777223331849294,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 7,
+        "actual_mean": -0.04954744337550479,
+        "pred_mean": 0.08702527186760317,
+        "count": 8.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 8,
+        "actual_mean": 0.12513007977317653,
+        "pred_mean": -0.04092995131783029,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 9,
+        "actual_mean": -0.31218881579205315,
+        "pred_mean": -0.03273206925259701,
+        "count": 5.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 10,
+        "actual_mean": -0.09427302618462102,
+        "pred_mean": -0.06916448133653257,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 11,
+        "actual_mean": -0.22428581924822494,
+        "pred_mean": -0.12288539762368629,
+        "count": 5.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 12,
+        "actual_mean": -0.05184183841092782,
+        "pred_mean": -0.26261487085797297,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 13,
+        "actual_mean": 0.1704669993570333,
+        "pred_mean": -0.04773478326293675,
+        "count": 9.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 14,
+        "actual_mean": -0.7052122170177049,
+        "pred_mean": -0.11009478987559611,
+        "count": 2.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 15,
+        "actual_mean": 0.22355800678965337,
+        "pred_mean": 0.0981054675601886,
+        "count": 9.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 16,
+        "actual_mean": 0.6876374661913703,
+        "pred_mean": 0.11215727929512655,
+        "count": 11.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 17,
+        "actual_mean": 0.46046825044949174,
+        "pred_mean": -0.08417943295659916,
+        "count": 10.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 18,
+        "actual_mean": 0.5153317556675884,
+        "pred_mean": -0.05981084224842688,
+        "count": 5.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 19,
+        "actual_mean": -0.6565063070583396,
+        "pred_mean": 0.012325099177119221,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 20,
+        "actual_mean": -0.2628288809376901,
+        "pred_mean": -0.12400653906681139,
+        "count": 7.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 21,
+        "actual_mean": 0.39988051954891074,
+        "pred_mean": -0.029668024932051586,
+        "count": 6.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 22,
+        "actual_mean": -0.1915863852482426,
+        "pred_mean": -0.04257845402415481,
+        "count": 4.0
+      },
+      {
+        "subreddit": "energy",
+        "hour_of_day": 23,
+        "actual_mean": -0.23148046390024404,
+        "pred_mean": -0.010927214157267204,
+        "count": 3.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 0,
+        "actual_mean": 0.1272047054808776,
+        "pred_mean": 0.07303488329628416,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 1,
+        "actual_mean": -1.4208971286237762,
+        "pred_mean": -0.29931756802409615,
+        "count": 1.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 2,
+        "actual_mean": 0.23170318533273337,
+        "pred_mean": 0.08985361505536678,
+        "count": 3.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 3,
+        "actual_mean": 0.11119392130972076,
+        "pred_mean": 0.06084478789644695,
+        "count": 3.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 4,
+        "actual_mean": 1.2968634761439133,
+        "pred_mean": -0.05083939658084213,
+        "count": 1.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 5,
+        "actual_mean": 0.27251213824971154,
+        "pred_mean": -0.009624505169584373,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 7,
+        "actual_mean": -0.27224627819194097,
+        "pred_mean": -0.13139906104620386,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 9,
+        "actual_mean": -0.35571080398294896,
+        "pred_mean": -0.04279019862887095,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 10,
+        "actual_mean": 0.5775591696925634,
+        "pred_mean": 0.05493117678965722,
+        "count": 4.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 11,
+        "actual_mean": 1.9692721699422664,
+        "pred_mean": -0.04693277714850214,
+        "count": 3.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 12,
+        "actual_mean": -0.19238884469690726,
+        "pred_mean": 0.001089256409588736,
+        "count": 5.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 13,
+        "actual_mean": 0.8165958630319579,
+        "pred_mean": -0.03381738440963924,
+        "count": 4.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 14,
+        "actual_mean": 1.324344231146545,
+        "pred_mean": 0.002370031415828252,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 15,
+        "actual_mean": 0.15518766334875844,
+        "pred_mean": -0.03906332467622847,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 17,
+        "actual_mean": 0.7781365567206993,
+        "pred_mean": -0.03199030821289847,
+        "count": 4.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 18,
+        "actual_mean": 0.3413510336277772,
+        "pred_mean": -0.02238177574433305,
+        "count": 4.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 19,
+        "actual_mean": -0.759169933083655,
+        "pred_mean": 0.03109971424670213,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 21,
+        "actual_mean": 0.20457811070997067,
+        "pred_mean": -0.13298929290750167,
+        "count": 1.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 22,
+        "actual_mean": -0.1644315377368767,
+        "pred_mean": -0.014935822619301983,
+        "count": 2.0
+      },
+      {
+        "subreddit": "gadgets",
+        "hour_of_day": 23,
+        "actual_mean": -1.6233728631358053,
+        "pred_mean": -0.02188104495002681,
+        "count": 1.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 0,
+        "actual_mean": 0.36952115779373845,
+        "pred_mean": -0.036289196362521474,
+        "count": 66.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 1,
+        "actual_mean": -0.15674569325721202,
+        "pred_mean": -0.019422200662770343,
+        "count": 75.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 2,
+        "actual_mean": 0.35909657257315064,
+        "pred_mean": -0.02193181264653723,
+        "count": 58.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 3,
+        "actual_mean": 0.11327391328421642,
+        "pred_mean": -0.03608962322878619,
+        "count": 44.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 4,
+        "actual_mean": 0.3317768163913446,
+        "pred_mean": -0.030141195022134817,
+        "count": 25.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 5,
+        "actual_mean": 0.35718569727103827,
+        "pred_mean": -0.05436406973488608,
+        "count": 24.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 6,
+        "actual_mean": -0.1393941357485346,
+        "pred_mean": 0.03152208354701508,
+        "count": 16.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 7,
+        "actual_mean": 0.18570643088826586,
+        "pred_mean": -0.005722429488095853,
+        "count": 18.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 8,
+        "actual_mean": -0.0950547310640861,
+        "pred_mean": 0.014266516650110628,
+        "count": 21.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 9,
+        "actual_mean": -0.2555938985733621,
+        "pred_mean": -0.025660779598761722,
+        "count": 23.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 10,
+        "actual_mean": 0.029389013759743374,
+        "pred_mean": -0.017588651822747083,
+        "count": 30.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 11,
+        "actual_mean": 0.24129364188883048,
+        "pred_mean": -0.013203391240113937,
+        "count": 43.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 12,
+        "actual_mean": 0.3432926293236026,
+        "pred_mean": 0.004086162246411747,
+        "count": 75.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 13,
+        "actual_mean": 0.42535656520977416,
+        "pred_mean": -0.026284148549867634,
+        "count": 85.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 14,
+        "actual_mean": 0.5771948264846238,
+        "pred_mean": 0.011320046048844934,
+        "count": 97.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 15,
+        "actual_mean": 0.43930836223392883,
+        "pred_mean": -0.007457187431398041,
+        "count": 119.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 16,
+        "actual_mean": 0.3202856326912931,
+        "pred_mean": -0.0004885653777652291,
+        "count": 110.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 17,
+        "actual_mean": 0.3460257529144775,
+        "pred_mean": -0.006000539005988106,
+        "count": 108.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 18,
+        "actual_mean": 0.28703403400539806,
+        "pred_mean": -0.019560239144715327,
+        "count": 106.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 19,
+        "actual_mean": 0.39538333129545333,
+        "pred_mean": 0.0013578708772392417,
+        "count": 102.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 20,
+        "actual_mean": 0.3844266408878214,
+        "pred_mean": -0.0010700034884904353,
+        "count": 105.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 21,
+        "actual_mean": 0.4692158994231079,
+        "pred_mean": -0.0031880798552261836,
+        "count": 98.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 22,
+        "actual_mean": 0.3992747521983137,
+        "pred_mean": -0.01560215047521066,
+        "count": 75.0
+      },
+      {
+        "subreddit": "politics",
+        "hour_of_day": 23,
+        "actual_mean": 0.17497977110095597,
+        "pred_mean": -0.04144399031768006,
+        "count": 70.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 0,
+        "actual_mean": 0.8045847594455026,
+        "pred_mean": 0.14938300466811,
+        "count": 4.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 1,
+        "actual_mean": 1.6940899498594801,
+        "pred_mean": -0.16400177941613212,
+        "count": 1.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 2,
+        "actual_mean": 0.279474989823902,
+        "pred_mean": -0.04073851298445933,
+        "count": 3.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 3,
+        "actual_mean": 0.3681508742390056,
+        "pred_mean": 0.07087040087948096,
+        "count": 5.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 4,
+        "actual_mean": 0.1917132395450174,
+        "pred_mean": -0.020578612844474917,
+        "count": 4.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 5,
+        "actual_mean": 0.6600690755981397,
+        "pred_mean": -0.012816283489807373,
+        "count": 3.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 6,
+        "actual_mean": 0.46991351849681484,
+        "pred_mean": -0.018261911993962866,
+        "count": 3.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 7,
+        "actual_mean": 2.3489809176171117,
+        "pred_mean": 0.10597192361018083,
+        "count": 1.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 8,
+        "actual_mean": -0.8445793110700045,
+        "pred_mean": -0.006047880841060098,
+        "count": 3.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 9,
+        "actual_mean": 0.8062881239577501,
+        "pred_mean": 0.07955405380164653,
+        "count": 8.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 10,
+        "actual_mean": 0.30263572851169257,
+        "pred_mean": 0.1300756314799872,
+        "count": 11.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 11,
+        "actual_mean": 1.3332236463449851,
+        "pred_mean": 0.169201020836543,
+        "count": 12.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 12,
+        "actual_mean": 0.7324026056954894,
+        "pred_mean": 0.14317626508613118,
+        "count": 13.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 13,
+        "actual_mean": 1.0641543833533331,
+        "pred_mean": 0.1192417792687219,
+        "count": 9.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 14,
+        "actual_mean": 0.5254390831115848,
+        "pred_mean": 0.06654162276594613,
+        "count": 7.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 15,
+        "actual_mean": 0.25219324169827406,
+        "pred_mean": 0.050108740065308306,
+        "count": 12.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 16,
+        "actual_mean": 0.2719909292950679,
+        "pred_mean": 0.043852710060625334,
+        "count": 6.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 17,
+        "actual_mean": 0.703531202399667,
+        "pred_mean": 0.028489818906203848,
+        "count": 12.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 18,
+        "actual_mean": 0.9784139210239012,
+        "pred_mean": 0.14935490588955375,
+        "count": 9.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 19,
+        "actual_mean": 0.4062263549141296,
+        "pred_mean": 0.10072738934107811,
+        "count": 11.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 20,
+        "actual_mean": 1.7652480458957238,
+        "pred_mean": 0.08999111607626216,
+        "count": 8.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 21,
+        "actual_mean": 1.6865635120661318,
+        "pred_mean": 0.08362702397502092,
+        "count": 10.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 22,
+        "actual_mean": 0.17199509974946264,
+        "pred_mean": 0.14878253902640157,
+        "count": 4.0
+      },
+      {
+        "subreddit": "science",
+        "hour_of_day": 23,
+        "actual_mean": 0.37957404931622546,
+        "pred_mean": 0.14608453895507842,
+        "count": 5.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 0,
+        "actual_mean": -0.4244164661962653,
+        "pred_mean": -0.007478096937894143,
+        "count": 1.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 1,
+        "actual_mean": 0.43980799315252245,
+        "pred_mean": -0.13045472103944777,
+        "count": 4.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 2,
+        "actual_mean": -0.930776512789525,
+        "pred_mean": -0.0422461904574111,
+        "count": 4.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 3,
+        "actual_mean": -0.13894227517155505,
+        "pred_mean": -0.09325780317107646,
+        "count": 8.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 4,
+        "actual_mean": -0.2454503617408159,
+        "pred_mean": -0.1375549497701731,
+        "count": 6.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 5,
+        "actual_mean": -0.4867967810209925,
+        "pred_mean": -0.15267091661740212,
+        "count": 5.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 6,
+        "actual_mean": -0.40301835976834643,
+        "pred_mean": -0.21726505550779454,
+        "count": 1.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 7,
+        "actual_mean": -0.27125089101593197,
+        "pred_mean": -0.04919386817284499,
+        "count": 6.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 8,
+        "actual_mean": -0.04468848852817135,
+        "pred_mean": -0.0109014129747001,
+        "count": 5.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 9,
+        "actual_mean": -0.17926509484030087,
+        "pred_mean": 0.1435297435415367,
+        "count": 2.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 10,
+        "actual_mean": -0.5163374214486012,
+        "pred_mean": -0.0795882286809458,
+        "count": 9.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 11,
+        "actual_mean": 0.9905246739041745,
+        "pred_mean": -0.053687438821357736,
+        "count": 3.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 12,
+        "actual_mean": -0.9675760236066916,
+        "pred_mean": -0.12042329557002296,
+        "count": 2.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 13,
+        "actual_mean": -0.666325225459825,
+        "pred_mean": -0.014423991259292732,
+        "count": 3.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 14,
+        "actual_mean": -0.6324988653401651,
+        "pred_mean": -0.08807310434052465,
+        "count": 5.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 15,
+        "actual_mean": 0.6997222257062202,
+        "pred_mean": 0.016547410216600805,
+        "count": 11.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 16,
+        "actual_mean": 0.1779829555040342,
+        "pred_mean": -0.06082598812776699,
+        "count": 8.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 17,
+        "actual_mean": -0.3472522056367282,
+        "pred_mean": -0.02926672945450618,
+        "count": 11.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 18,
+        "actual_mean": -0.3332013339579744,
+        "pred_mean": -0.02913695936675961,
+        "count": 7.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 19,
+        "actual_mean": 0.35755308629276455,
+        "pred_mean": -0.023996419109170893,
+        "count": 14.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 20,
+        "actual_mean": 0.6257665108491565,
+        "pred_mean": -0.07656331660923996,
+        "count": 9.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 21,
+        "actual_mean": 0.7101137947203265,
+        "pred_mean": -0.10327953455077783,
+        "count": 12.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 22,
+        "actual_mean": -0.0540877390221052,
+        "pred_mean": -0.08463732618830361,
+        "count": 8.0
+      },
+      {
+        "subreddit": "space",
+        "hour_of_day": 23,
+        "actual_mean": 0.13756412439903537,
+        "pred_mean": -0.023075643995314754,
+        "count": 5.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 1,
+        "actual_mean": 0.533613801884068,
+        "pred_mean": 0.05361306907035299,
+        "count": 3.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 2,
+        "actual_mean": -0.35777282697895363,
+        "pred_mean": -0.04544926062439073,
+        "count": 4.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 3,
+        "actual_mean": -0.2526603432006929,
+        "pred_mean": -0.02064353158437138,
+        "count": 3.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 6,
+        "actual_mean": 0.11078174647194139,
+        "pred_mean": 0.0039520407214795866,
+        "count": 1.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 7,
+        "actual_mean": 0.5947555221014837,
+        "pred_mean": 0.01626932038654546,
+        "count": 4.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 8,
+        "actual_mean": -0.8806918611909711,
+        "pred_mean": -0.003076619474587306,
+        "count": 2.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 9,
+        "actual_mean": 0.05873171418572939,
+        "pred_mean": 0.05187546159443714,
+        "count": 3.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 11,
+        "actual_mean": 0.11338405314844091,
+        "pred_mean": 0.03862124571757023,
+        "count": 15.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 12,
+        "actual_mean": 0.726774671961064,
+        "pred_mean": 0.03111497184974223,
+        "count": 6.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 13,
+        "actual_mean": 0.3622519309392934,
+        "pred_mean": 0.14388181697339403,
+        "count": 5.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 14,
+        "actual_mean": 0.5056913414737318,
+        "pred_mean": 0.006307670102016522,
+        "count": 6.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 15,
+        "actual_mean": -0.035831341641977654,
+        "pred_mean": -0.07425376473464156,
+        "count": 2.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 16,
+        "actual_mean": -0.13053936067570732,
+        "pred_mean": 0.04894857190039849,
+        "count": 2.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 17,
+        "actual_mean": 1.1584724422464399,
+        "pred_mean": 0.009009194291430274,
+        "count": 2.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 18,
+        "actual_mean": 0.2698092546959073,
+        "pred_mean": -0.10278541539800788,
+        "count": 4.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 19,
+        "actual_mean": -1.5177357740605557,
+        "pred_mean": -0.08891793941106592,
+        "count": 1.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 20,
+        "actual_mean": -0.41674953146039234,
+        "pred_mean": -0.06263136695899438,
+        "count": 4.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 21,
+        "actual_mean": 1.1801580073110862,
+        "pred_mean": 0.047937847942396423,
+        "count": 2.0
+      },
+      {
+        "subreddit": "technews",
+        "hour_of_day": 23,
+        "actual_mean": 0.30818991076029895,
+        "pred_mean": 0.04586726507434149,
+        "count": 3.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 0,
+        "actual_mean": 1.1210016845594681,
+        "pred_mean": -0.021406583014442725,
+        "count": 25.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 1,
+        "actual_mean": -0.5878626609395265,
+        "pred_mean": -0.028546699951278322,
+        "count": 8.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 2,
+        "actual_mean": -0.046376438432665375,
+        "pred_mean": -0.03484997375535998,
+        "count": 15.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 3,
+        "actual_mean": 0.6835729539607655,
+        "pred_mean": 0.05804850261439534,
+        "count": 15.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 4,
+        "actual_mean": 0.7119238548532308,
+        "pred_mean": 0.03655928385311773,
+        "count": 8.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 5,
+        "actual_mean": -0.6057101021210877,
+        "pred_mean": 0.03691697601403331,
+        "count": 7.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 6,
+        "actual_mean": 0.5658605704515749,
+        "pred_mean": -0.0075011637039394475,
+        "count": 9.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 7,
+        "actual_mean": -0.47397229413973624,
+        "pred_mean": 0.007134780908057091,
+        "count": 10.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 8,
+        "actual_mean": 0.5327560551400367,
+        "pred_mean": 0.0007761802390936351,
+        "count": 14.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 9,
+        "actual_mean": -0.46177806971040153,
+        "pred_mean": 0.03121778089693006,
+        "count": 11.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 10,
+        "actual_mean": 0.8449965611658344,
+        "pred_mean": 0.013352901263953852,
+        "count": 9.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 11,
+        "actual_mean": 0.060761884967523175,
+        "pred_mean": 0.0087998305435617,
+        "count": 31.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 12,
+        "actual_mean": 0.19466185970967692,
+        "pred_mean": 0.03101368807422184,
+        "count": 32.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 13,
+        "actual_mean": 0.16550869621533706,
+        "pred_mean": 0.07266940246916259,
+        "count": 26.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 14,
+        "actual_mean": 0.3544469503849007,
+        "pred_mean": -0.023349986072488577,
+        "count": 38.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 15,
+        "actual_mean": -0.03627801224843016,
+        "pred_mean": 0.010941823508081316,
+        "count": 28.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 16,
+        "actual_mean": 0.6674661357441518,
+        "pred_mean": -0.02340081130995692,
+        "count": 23.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 17,
+        "actual_mean": 0.47461733038220255,
+        "pred_mean": 0.017697592157583344,
+        "count": 18.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 18,
+        "actual_mean": 0.20339890345140765,
+        "pred_mean": 0.00565636919605536,
+        "count": 23.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 19,
+        "actual_mean": -0.05118168790517598,
+        "pred_mean": -0.03566582842197029,
+        "count": 35.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 20,
+        "actual_mean": 0.7571798733870764,
+        "pred_mean": -0.01721126167371482,
+        "count": 26.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 21,
+        "actual_mean": 0.9502983850880362,
+        "pred_mean": 0.10048769219183118,
+        "count": 20.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 22,
+        "actual_mean": 1.1121690828297959,
+        "pred_mean": -0.027475159081410728,
+        "count": 12.0
+      },
+      {
+        "subreddit": "technology",
+        "hour_of_day": 23,
+        "actual_mean": 0.39463904421447765,
+        "pred_mean": -0.009960689675819515,
+        "count": 15.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 0,
+        "actual_mean": 0.43267697456922966,
+        "pred_mean": 0.008127691573639899,
+        "count": 22.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 1,
+        "actual_mean": -0.09934845516969783,
+        "pred_mean": 0.0005454845641193479,
+        "count": 18.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 2,
+        "actual_mean": 0.04339917626431802,
+        "pred_mean": -0.03614732951618597,
+        "count": 15.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 3,
+        "actual_mean": 0.729335880340787,
+        "pred_mean": 0.0012771655711756268,
+        "count": 14.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 4,
+        "actual_mean": 0.22048060122547666,
+        "pred_mean": 0.00568141935765704,
+        "count": 24.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 5,
+        "actual_mean": 0.058534052732962166,
+        "pred_mean": 0.0015137990430261073,
+        "count": 19.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 6,
+        "actual_mean": 0.43151380255118693,
+        "pred_mean": 0.015180685591827146,
+        "count": 20.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 7,
+        "actual_mean": 0.7979272533575804,
+        "pred_mean": 0.040582840131596576,
+        "count": 21.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 8,
+        "actual_mean": 0.09164515501872994,
+        "pred_mean": 0.05267300918947416,
+        "count": 23.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 9,
+        "actual_mean": 0.13699784431767242,
+        "pred_mean": 0.03757162351827408,
+        "count": 28.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 10,
+        "actual_mean": 0.15641691053971676,
+        "pred_mean": 0.019810898568039744,
+        "count": 25.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 11,
+        "actual_mean": 0.09249480026032053,
+        "pred_mean": -0.01932716313341184,
+        "count": 25.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 12,
+        "actual_mean": 0.4014558502299432,
+        "pred_mean": 0.04535360463330612,
+        "count": 43.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 13,
+        "actual_mean": 0.1180045256153698,
+        "pred_mean": 0.0478937073127996,
+        "count": 37.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 14,
+        "actual_mean": 0.4728366847562445,
+        "pred_mean": 0.040975019092006876,
+        "count": 32.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 15,
+        "actual_mean": 0.11239408637379537,
+        "pred_mean": 0.04517998441842188,
+        "count": 30.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 16,
+        "actual_mean": 0.24901147911980387,
+        "pred_mean": 0.028954685411799214,
+        "count": 34.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 17,
+        "actual_mean": 0.3785806788422757,
+        "pred_mean": -0.003874645488113003,
+        "count": 40.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 18,
+        "actual_mean": 0.25612567683907733,
+        "pred_mean": 0.04017652802841289,
+        "count": 30.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 19,
+        "actual_mean": 0.16450869918424735,
+        "pred_mean": 0.0476782023563345,
+        "count": 21.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 20,
+        "actual_mean": 0.18328361608720597,
+        "pred_mean": 0.023562116176565364,
+        "count": 26.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 21,
+        "actual_mean": 0.21861200662936614,
+        "pred_mean": 0.00695654275732791,
+        "count": 28.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 22,
+        "actual_mean": 0.9093516449305664,
+        "pred_mean": -0.02216108665432038,
+        "count": 33.0
+      },
+      {
+        "subreddit": "worldnews",
+        "hour_of_day": 23,
+        "actual_mean": 0.36005077863970847,
+        "pred_mean": 0.006011601461953876,
+        "count": 21.0
+      }
+    ]
+  },
+  "pairwise_accuracy": 0.5497898055701524,
+  "pairwise_pairs": 15224,
+  "stage_b_tree": {
+    "train_rmse": 0.9294209701056652,
+    "train_r2": 0.056839286524313914,
+    "test_rmse": 1.176367660139703,
+    "test_r2": -0.02430831117730481
+  },
+  "stage_b_tree_features": {
+    "capitalization_ratio": 92.0,
+    "title_length": 61.0,
+    "flesch_kincaid_grade": 56.0,
+    "sentiment_compound": 45.0,
+    "sentiment_negative": 44.0,
+    "avg_word_length": 43.0,
+    "title_words": 39.0,
+    "sentiment_neutral": 34.0,
+    "sentiment_positive": 30.0,
+    "title_chars_per_word": 25.0
+  },
+  "stage_b_elasticnet": {
+    "train_rmse": 0.9523453539297664,
+    "train_r2": 0.009738936818461386,
+    "test_rmse": 1.181827427115617,
+    "test_r2": -0.03383843143265319
+  },
+  "stage_b_elasticnet_features": {
+    "title_words": 0.026387808317162316,
+    "title_length": 0.02035974452051525,
+    "sentiment_compound": -0.01925973548171116,
+    "sentiment_negative": 0.010871577864810751,
+    "has_question": -0.006833951074738184,
+    "has_numbers": 0.0039737931059829045
+  }
+}

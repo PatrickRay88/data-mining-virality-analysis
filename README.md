@@ -51,8 +51,17 @@ This project replicates and extends Weissburg et al. (2022) "Judging a Book by I
 
 4. **Collect Data**:
    ```bash
+   # Single subreddit
    python bin/collect_reddit.py --subreddit technology --days 30
+
+   # Multiple subreddits in one run (repeat -s flag)
+   python bin/collect_reddit.py -s technology -s science -s worldnews --days 30
+
    python bin/collect_hn.py --days 30
+
+   # Continuous /new polling + 5/15/30/60 minute snapshots
+   python bin/run_snapshot_collector.py -s technology -s science -s worldnews \
+       --new-limit 75 --loop-seconds 300
    ```
 
 5. **Feature Engineering**:
@@ -81,7 +90,7 @@ Test Reddit→HN and HN→Reddit model transferability.
 
 ## Data Collection Notes
 
-- **Reddit**: Uses PRAW API with rate limiting and early snapshot collection
+- **Reddit**: Uses PRAW API with rate limiting and early snapshot collection. `bin/run_snapshot_collector.py` polls `/new` feeds on a schedule, persists normalized slices, and records 5/15/30/60-minute score snapshots for exposure modeling.
 - **Hacker News**: Uses free JSON API for "newstories" stream
 - **Ethics**: Public data only, anonymized authors, TOS compliant
 - **Storage**: All data stored as Parquet files for efficient analysis

@@ -1,0 +1,42 @@
+{
+  "train_rmse": 0.9737684699695561,
+  "test_rmse": 1.205612894473483,
+  "train_mae": 0.7036836949324264,
+  "test_mae": 0.9087710629008638,
+  "train_r2": 0.027583200780313843,
+  "test_r2": -0.018238748619533895,
+  "pairwise_accuracy": 0.5510941709929684,
+  "pairwise_pairs": 15217,
+  "n_train": 9376,
+  "n_test": 4019,
+  "split_time": "2025-11-12T00:33:19.800000+00:00",
+  "config": {
+    "split_quantile": 0.7,
+    "model_name": "sentence-transformers/all-mpnet-base-v2",
+    "batch_size": 32,
+    "use_pca": true,
+    "pca_components": 128,
+    "regressor": "elasticnet",
+    "ridge_alphas": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "elasticnet_l1_ratios": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "elasticnet_alphas": [
+      0.005,
+      0.05,
+      0.5
+    ],
+    "mlp_hidden_layers": [
+      256,
+      128
+    ],
+    "mlp_max_iter": 400,
+    "random_state": 42
+  }
+}

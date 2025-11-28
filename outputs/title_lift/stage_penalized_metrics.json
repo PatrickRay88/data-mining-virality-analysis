@@ -1,0 +1,173 @@
+{
+  "stage_a": {
+    "train_rmse": 1.001014384222603,
+    "test_rmse": 1.258468960468657,
+    "train_mae": 0.7226945618683492,
+    "test_mae": 0.9961862247494425,
+    "train_r2": 0.863987283665396,
+    "test_r2": 0.5269826020891997
+  },
+  "stage_b": {
+    "train_rmse": 0.9802412274681439,
+    "test_rmse": 1.2296618754106605,
+    "train_mae": 0.7072676200514294,
+    "test_mae": 0.9657623347257196,
+    "train_r2": 0.041073562381328976,
+    "test_r2": 0.01815769559156155
+  },
+  "split_time": "2025-11-12 00:33:19.800000+00:00",
+  "config": {
+    "split_quantile": 0.7,
+    "stage_a_l1_ratios": [
+      0.1,
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
+    "stage_a_alphas": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "stage_a_max_iter": 8000,
+    "stage_b_l1_ratios": [
+      0.1,
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
+    "stage_b_alphas": [
+      0.001,
+      0.01,
+      0.1,
+      1.0
+    ],
+    "stage_b_max_iter": 8000,
+    "cv_folds": 5,
+    "n_jobs": -1,
+    "top_k": 15
+  },
+  "stage_a_top_positive": [
+    {
+      "feature": "log_score_5m",
+      "weight": 2.3181042519099337
+    },
+    {
+      "feature": "subreddit_score_std",
+      "weight": 0.14822854549062833
+    },
+    {
+      "feature": "velocity_5_to_30m",
+      "weight": 0.12284992791612631
+    },
+    {
+      "feature": "sub_politics",
+      "weight": 0.11410074553394373
+    },
+    {
+      "feature": "sub_worldnews",
+      "weight": 0.08031129515243393
+    },
+    {
+      "feature": "is_external_link",
+      "weight": 0.054624037701599855
+    },
+    {
+      "feature": "author_avg_score",
+      "weight": 0.039936123180333606
+    },
+    {
+      "feature": "author_post_count_log",
+      "weight": 0.028961332561511458
+    },
+    {
+      "feature": "subreddit_avg_score",
+      "weight": 0.025727507451610697
+    },
+    {
+      "feature": "subreddit_post_count_global",
+      "weight": 0.009159516159170092
+    }
+  ],
+  "stage_a_top_negative": [
+    {
+      "feature": "is_text_post",
+      "weight": -0.060266462923850794
+    },
+    {
+      "feature": "sub_economy",
+      "weight": -0.008032453201340991
+    }
+  ],
+  "stage_b_top_positive": [
+    {
+      "feature": "title_length",
+      "weight": 0.07911385453415883
+    },
+    {
+      "feature": "title_words",
+      "weight": 0.05680230833903053
+    },
+    {
+      "feature": "sentiment_negative",
+      "weight": 0.04822551716174301
+    },
+    {
+      "feature": "has_numbers",
+      "weight": 0.010574011095659622
+    },
+    {
+      "feature": "person_entities",
+      "weight": 0.008266285900954663
+    },
+    {
+      "feature": "title_chars_per_word",
+      "weight": 0.004047552238565916
+    },
+    {
+      "feature": "flesch_kincaid_grade",
+      "weight": 0.003924638316002613
+    },
+    {
+      "feature": "date_entities",
+      "weight": 0.0036185985436642024
+    }
+  ],
+  "stage_b_top_negative": [
+    {
+      "feature": "has_question",
+      "weight": -0.07271963628312973
+    },
+    {
+      "feature": "sentiment_compound",
+      "weight": -0.03254251850542454
+    },
+    {
+      "feature": "all_caps_words",
+      "weight": -0.021548036433352097
+    },
+    {
+      "feature": "punctuation_count",
+      "weight": -0.00913194767175277
+    },
+    {
+      "feature": "capitalization_ratio",
+      "weight": -0.00824365052575947
+    },
+    {
+      "feature": "has_exclamation",
+      "weight": -0.007485077788418044
+    },
+    {
+      "feature": "clickbait_patterns",
+      "weight": -0.005491001947374405
+    },
+    {
+      "feature": "has_clickbait",
+      "weight": -0.0034686517422000064
+    }
+  ]
+}

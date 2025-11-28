@@ -1,0 +1,195 @@
+Virality Features Dataset Profile
+===================================
+Total rows: 13395
+Total columns: 90
+
+Top platform values (count | pct):
+  reddit: 13395 (100.00%)
+
+Epoch-derived datetime coverage:
+  created_timestamp: 2025-09-30 12:07:24 to 2025-11-18 13:20:58
+
+Missing value summary (sorted by pct missing):
+                               dtype  missing_count  missing_pct
+collection_type_detail        object           3432        25.62
+ingested_timestamp           float64           3432        25.62
+collection_run_id             object           3432        25.62
+collection_type               object           2603        19.43
+post_id                       object              0         0.00
+age_hours                    float64              0         0.00
+hour_cos                     float64              0         0.00
+hour_sin                     float64              0         0.00
+log_age_hours                float64              0         0.00
+is_old                         int64              0         0.00
+is_recent                      int64              0         0.00
+is_very_new                    int64              0         0.00
+is_friday                      int64              0         0.00
+is_image_post                  int64              0         0.00
+is_monday                      int64              0         0.00
+is_weekend                     int64              0         0.00
+day_of_week                    int32              0         0.00
+is_night                       int64              0         0.00
+is_evening                     int64              0         0.00
+is_afternoon                   int64              0         0.00
+is_morning                     int64              0         0.00
+hour_of_day                    int32              0         0.00
+total_entities                 int64              0         0.00
+date_entities                  int64              0         0.00
+is_text_post                   int64              0         0.00
+has_author                     int64              0         0.00
+is_news_post                   int64              0         0.00
+growth_rate_30min            float64              0         0.00
+score_60m                    float64              0         0.00
+score_30m                    float64              0         0.00
+score_15m                    float64              0         0.00
+score_5m                     float64              0         0.00
+sustained_growth               int64              0         0.00
+early_momentum               float64              0         0.00
+growth_rate_60min            float64              0         0.00
+score_at_60min               float64              0         0.00
+score_at_30min               float64              0         0.00
+is_external_link               int64              0         0.00
+growth_rate_15min            float64              0         0.00
+score_at_15min               float64              0         0.00
+score_at_5min                float64              0         0.00
+subreddit_post_count           int64              0         0.00
+author_post_count_log        float64              0         0.00
+is_frequent_poster             int64              0         0.00
+author_post_count              int64              0         0.00
+person_entities                int64              0         0.00
+org_entities                   int64              0         0.00
+clickbait_patterns             int64              0         0.00
+has_clickbait                  int64              0         0.00
+domain                        object              0         0.00
+subreddit_post_count_global    int64              0         0.00
+subreddit_median_score       float64              0         0.00
+subreddit_avg_score          float64              0         0.00
+is_new_collection              int64              0         0.00
+is_stickied                     bool              0         0.00
+is_spoiler                      bool              0         0.00
+is_nsfw                         bool              0         0.00
+text_content                  object              0         0.00
+url                           object              0         0.00
+platform                      object              0         0.00
+is_self_post                    bool              0         0.00
+subreddit                     object              0         0.00
+upvote_ratio                 float64              0         0.00
+comment_count                  int64              0         0.00
+created_timestamp            float64              0         0.00
+title                         object              0         0.00
+score                          int64              0         0.00
+author_hash                   object              0         0.00
+subreddit_score_std          float64              0         0.00
+author_avg_score             float64              0         0.00
+author_post_count_global       int64              0         0.00
+title_length                   int64              0         0.00
+clickbait_keywords             int64              0         0.00
+type_token_ratio             float64              0         0.00
+avg_word_length              float64              0         0.00
+flesch_kincaid_grade         float64              0         0.00
+sentiment_neutral            float64              0         0.00
+sentiment_negative           float64              0         0.00
+sentiment_positive           float64              0         0.00
+sentiment_compound           float64              0         0.00
+has_numbers                    int64              0         0.00
+number_count                   int64              0         0.00
+capitalization_ratio         float64              0         0.00
+all_caps_words                 int64              0         0.00
+punctuation_count              int64              0         0.00
+has_exclamation                int64              0         0.00
+has_question                   int64              0         0.00
+title_chars_per_word         float64              0         0.00
+title_words                    int64              0         0.00
+velocity_5_to_30m            float64              0         0.00
+
+Numeric feature summary (count, mean, std, min, quartiles, max):
+                               count          mean         std           min           25%           50%           75%           max
+score                        13395.0  9.863720e+02    4330.413  0.000000e+00  1.000000e+00  2.000000e+00  2.100000e+01  6.556100e+04
+created_timestamp            13395.0  1.762343e+09  921555.454  1.759234e+09  1.762087e+09  1.762538e+09  1.762989e+09  1.763472e+09
+comment_count                13395.0  6.175400e+01     259.508  0.000000e+00  0.000000e+00  1.000000e+00  6.000000e+00  5.602000e+03
+upvote_ratio                 13395.0  9.050000e-01       0.179  2.000000e-02  9.100000e-01  1.000000e+00  1.000000e+00  1.000000e+00
+ingested_timestamp            9963.0  1.762790e+09  373332.763  1.762216e+09  1.762451e+09  1.762793e+09  1.763094e+09  1.763472e+09
+is_new_collection            13395.0  8.060000e-01       0.396  0.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+subreddit_avg_score          13395.0  9.863720e+02     619.387  7.468000e+01  3.746150e+02  1.145177e+03  1.589800e+03  1.924671e+03
+subreddit_median_score       13395.0  5.029000e+00      14.201  1.000000e+00  2.000000e+00  2.000000e+00  3.000000e+00  8.200000e+01
+subreddit_post_count_global  13395.0  2.272319e+03    1546.606  2.180000e+02  7.480000e+02  1.664000e+03  4.387000e+03  4.387000e+03
+subreddit_score_std          13395.0  3.683228e+03    2193.199  2.496050e+02  8.099380e+02  5.139161e+03  5.255149e+03  6.322849e+03
+author_avg_score             13395.0  9.863720e+02    2324.683  0.000000e+00  2.952000e+00  1.267200e+02  1.189500e+03  4.442000e+04
+author_post_count_global     13395.0  4.024500e+01      65.372  1.000000e+00  2.000000e+00  1.400000e+01  4.400000e+01  2.970000e+02
+title_length                 13395.0  9.089700e+01      54.790  1.000000e+00  6.100000e+01  7.500000e+01  9.700000e+01  3.000000e+02
+title_words                  13395.0  1.456000e+01       8.768  1.000000e+00  1.000000e+01  1.200000e+01  1.600000e+01  6.100000e+01
+title_chars_per_word         13395.0  6.313000e+00       1.660  1.000000e+00  5.733000e+00  6.235000e+00  6.778000e+00  1.670000e+02
+has_question                 13395.0  7.100000e-02       0.256  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+has_exclamation              13395.0  8.000000e-03       0.090  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+punctuation_count            13395.0  1.772000e+00       2.137  0.000000e+00  0.000000e+00  1.000000e+00  2.000000e+00  3.500000e+01
+all_caps_words               13395.0  4.740000e-01       0.803  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00  3.100000e+01
+capitalization_ratio         13395.0  9.200000e-02       0.075  0.000000e+00  3.900000e-02  6.800000e-02  1.370000e-01  1.000000e+00
+number_count                 13395.0  3.820000e-01       0.870  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.700000e+01
+has_numbers                  13395.0  2.390000e-01       0.427  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+sentiment_compound           13395.0 -5.500000e-02       0.388 -9.790000e-01 -3.400000e-01  0.000000e+00  1.280000e-01  9.620000e-01
+sentiment_positive           13395.0  7.400000e-02       0.118  0.000000e+00  0.000000e+00  0.000000e+00  1.400000e-01  1.000000e+00
+sentiment_negative           13395.0  1.010000e-01       0.135  0.000000e+00  0.000000e+00  0.000000e+00  1.870000e-01  7.750000e-01
+sentiment_neutral            13395.0  8.240000e-01       0.165  0.000000e+00  7.140000e-01  8.330000e-01  1.000000e+00  1.000000e+00
+flesch_kincaid_grade         13395.0  9.433000e+00       5.240 -3.400000e+00  6.705000e+00  9.082000e+00  1.186400e+01  3.506000e+02
+avg_word_length              13395.0  5.404000e+00       1.675  1.000000e+00  4.812000e+00  5.312000e+00  5.867000e+00  1.670000e+02
+type_token_ratio             13395.0  9.740000e-01       0.050  5.000000e-01  9.580000e-01  1.000000e+00  1.000000e+00  1.000000e+00
+clickbait_keywords           13395.0  1.800000e-02       0.138  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  2.000000e+00
+clickbait_patterns           13395.0  2.100000e-02       0.146  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  2.000000e+00
+has_clickbait                13395.0  3.600000e-02       0.186  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+person_entities              13395.0  3.250000e-01       0.604  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00  7.000000e+00
+org_entities                 13395.0  5.590000e-01       0.757  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00  1.300000e+01
+date_entities                13395.0  1.460000e-01       0.417  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  6.000000e+00
+total_entities               13395.0  1.031000e+00       1.049  0.000000e+00  0.000000e+00  1.000000e+00  2.000000e+00  1.600000e+01
+hour_of_day                  13395.0  1.329400e+01       6.531  0.000000e+00  9.000000e+00  1.400000e+01  1.800000e+01  2.300000e+01
+is_morning                   13395.0  1.570000e-01       0.364  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_afternoon                 13395.0  3.620000e-01       0.481  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00  1.000000e+00
+is_evening                   13395.0  3.080000e-01       0.462  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00  1.000000e+00
+is_night                     13395.0  1.730000e-01       0.378  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+day_of_week                  13395.0  2.816000e+00       1.966  0.000000e+00  1.000000e+00  3.000000e+00  4.000000e+00  6.000000e+00
+is_weekend                   13395.0  2.380000e-01       0.426  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_monday                    13395.0  1.560000e-01       0.363  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_friday                    13395.0  1.510000e-01       0.358  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+age_hours                    13395.0  3.207060e+02     255.988  7.077000e+00  1.411490e+02  2.666630e+02  3.917140e+02  1.184304e+03
+is_very_new                  13395.0  0.000000e+00       0.000  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+is_recent                    13395.0  0.000000e+00       0.000  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+is_old                       13395.0  9.710000e-01       0.167  0.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+log_age_hours                13395.0  5.424000e+00       0.930  2.089000e+00  4.957000e+00  5.590000e+00  5.973000e+00  7.078000e+00
+hour_sin                     13395.0 -2.540000e-01       0.652 -1.000000e+00 -8.660000e-01 -5.000000e-01  2.590000e-01  1.000000e+00
+hour_cos                     13395.0 -6.800000e-02       0.712 -1.000000e+00 -7.070000e-01 -2.590000e-01  7.070000e-01  1.000000e+00
+is_text_post                 13395.0  9.100000e-02       0.287  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_image_post                13395.0  3.700000e-02       0.189  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_news_post                 13395.0  1.520000e-01       0.359  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.000000e+00
+is_external_link             13395.0  9.090000e-01       0.287  0.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+has_author                   13395.0  1.000000e+00       0.000  1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+author_post_count            13395.0  4.024500e+01      65.372  1.000000e+00  2.000000e+00  1.400000e+01  4.400000e+01  2.970000e+02
+is_frequent_poster           13395.0  6.680000e-01       0.471  0.000000e+00  0.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+author_post_count_log        13395.0  2.671000e+00       1.500  6.930000e-01  1.099000e+00  2.708000e+00  3.807000e+00  5.697000e+00
+subreddit_post_count         13395.0  2.272319e+03    1546.606  2.180000e+02  7.480000e+02  1.664000e+03  4.387000e+03  4.387000e+03
+score_at_5min                13395.0  9.908860e+02    4331.526  0.000000e+00  1.000000e+00  4.000000e+00  2.600000e+01  6.556100e+04
+score_at_15min               13395.0  9.971780e+02    4330.308  0.000000e+00  2.000000e+00  1.000000e+01  5.000000e+01  6.556100e+04
+growth_rate_15min            13395.0  6.290000e-01       3.831 -8.000000e-01  0.000000e+00  0.000000e+00  6.000000e-01  3.787000e+02
+score_at_30min               13395.0  1.009543e+03    4329.816  0.000000e+00  3.000000e+00  1.700000e+01  8.200000e+01  6.556100e+04
+growth_rate_30min            13395.0  7.460000e-01       5.742 -3.200000e-01  0.000000e+00  4.000000e-02  5.200000e-01  5.672800e+02
+score_at_60min               13395.0  1.042629e+03    4338.704  0.000000e+00  3.000000e+00  2.800000e+01  1.380000e+02  6.556100e+04
+growth_rate_60min            13395.0  9.410000e-01       7.285 -1.450000e-01  0.000000e+00  1.800000e-02  4.730000e-01  6.487820e+02
+early_momentum               13395.0  1.614000e+00       1.920  0.000000e+00  7.500000e-01  1.000000e+00  2.000000e+00  5.281800e+01
+sustained_growth             13395.0  5.030000e-01       0.500  0.000000e+00  0.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00
+score_5m                     13395.0  9.908860e+02    4331.526  0.000000e+00  1.000000e+00  4.000000e+00  2.600000e+01  6.556100e+04
+score_15m                    13395.0  9.971780e+02    4330.308  0.000000e+00  2.000000e+00  1.000000e+01  5.000000e+01  6.556100e+04
+score_30m                    13395.0  1.009543e+03    4329.816  0.000000e+00  3.000000e+00  1.700000e+01  8.200000e+01  6.556100e+04
+score_60m                    13395.0  1.042629e+03    4338.704  0.000000e+00  3.000000e+00  2.800000e+01  1.380000e+02  6.556100e+04
+velocity_5_to_30m            13395.0  7.460000e-01       5.742 -3.200000e-01  0.000000e+00  4.000000e-02  5.200000e-01  5.672800e+02
+
+Categorical feature summary (unique, top, freq):
+                        count unique                                                                                   top   freq
+post_id                 13395  13395                                                                               1oc03pf      1
+platform                13395      1                                                                                reddit  13395
+author_hash             13395   3749                                                                              a10fca31    297
+title                   13395  12747  Genetically Engineered Babies Are Banned. Tech Titans Are Trying to Make One Anyway.      5
+subreddit               13395     11                                                                              politics   4387
+url                     13395  12610                                             https://www.reddit.com/live/18hnzysb1elcs     18
+domain                  13395   1438                                                                       theguardian.com    471
+text_content            13395   1617                                                                                        11760
+collection_type         10792      1                                                                                   new  10792
+collection_run_id        9963   3175                                                                       20251104_003318    358
+collection_type_detail   9963      1                                                                                stream   9963

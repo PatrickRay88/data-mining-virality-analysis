@@ -13,13 +13,14 @@ import pandas as pd
 import logging
 from pathlib import Path
 import glob
+import numpy as np
 
-# Add src to Python path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Ensure project root on path for local package imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from preprocess.features_titles import TitleFeatureExtractor
-from preprocess.features_context import ContextFeatureExtractor
-from preprocess.normalize import DataNormalizer
+from src.preprocess.features_titles import TitleFeatureExtractor
+from src.preprocess.features_context import ContextFeatureExtractor
+from src.preprocess.normalize import DataNormalizer
 
 
 @click.command()
@@ -65,7 +66,11 @@ def main(input_dir, output, platform):
         # Load and combine all data
         all_data = []
         for file in data_files:
-            if 'snapshots' not in file and 'features' not in file:  # Skip snapshot and feature files
+            if (
+                'snapshots' not in file
+                and 'features' not in file
+                and 'stage_predictions' not in file
+            ):  # Skip artifact files
                 df = pd.read_parquet(file)
                 all_data.append(df)
                 logger.info(f"Loaded {len(df)} records from {file}")
@@ -82,6 +87,31 @@ def main(input_dir, output, platform):
         original_len = len(combined_df)
         combined_df = combined_df.drop_duplicates(subset=['post_id'])
         logger.info(f"Removed {original_len - len(combined_df)} duplicates")
+
+        # Ensure collection_type flag exists for downstream modeling
+        if 'collection_type' not in combined_df.columns:
+            combined_df['collection_type'] = 'top'
+        combined_df['is_new_collection'] = (combined_df['collection_type'] == 'new').astype(int)
+
+        # Aggregate subreddit- and author-level statistics for Stage A
+        if 'subreddit' in combined_df.columns:
+            subreddit_stats = combined_df.groupby('subreddit')['score'].agg(['mean', 'median', 'count', 'std']).rename(columns={
+                'mean': 'subreddit_avg_score',
+                'median': 'subreddit_median_score',
+                'count': 'subreddit_post_count_global',
+                'std': 'subreddit_score_std'
+            })
+            combined_df = combined_df.merge(subreddit_stats, on='subreddit', how='left')
+            combined_df['subreddit_score_std'] = combined_df['subreddit_score_std'].fillna(0)
+
+        if 'author_hash' in combined_df.columns:
+            author_stats = combined_df.groupby('author_hash')['score'].agg(['mean', 'count']).rename(columns={
+                'mean': 'author_avg_score',
+                'count': 'author_post_count_global'
+            })
+            combined_df = combined_df.merge(author_stats, on='author_hash', how='left')
+            combined_df['author_avg_score'] = combined_df['author_avg_score'].fillna(0)
+            combined_df['author_post_count_global'] = combined_df['author_post_count_global'].fillna(0)
         
         # Extract title features
         logger.info("Extracting title features...")
@@ -99,13 +129,19 @@ def main(input_dir, output, platform):
         ], axis=1)
         
         # Add snapshot features if available
-        snapshot_files = glob.glob(str(input_path / "*snapshots*.parquet"))
+        snapshot_files = glob.glob(str(input_path / "**/*snapshots*.parquet"), recursive=True)
         if snapshot_files:
             logger.info("Processing snapshot data for early score features...")
             all_snapshots = []
-            for file in snapshot_files:
-                snapshots = pd.read_parquet(file)
-                all_snapshots.append(snapshots)
+            total_snapshots = len(snapshot_files)
+            with click.progressbar(
+                snapshot_files,
+                length=total_snapshots,
+                label="Loading snapshot parquet files",
+            ) as iterator:
+                for file in iterator:
+                    snapshots = pd.read_parquet(file)
+                    all_snapshots.append(snapshots)
             
             if all_snapshots:
                 combined_snapshots = pd.concat(all_snapshots, ignore_index=True)
@@ -114,6 +150,52 @@ def main(input_dir, output, platform):
                 )
                 features_df = pd.concat([features_df, early_features], axis=1)
                 logger.info("Added early score trajectory features")
+
+                score_column_map = {
+                    'score_at_5min': 'score_5m',
+                    'score_at_15min': 'score_15m',
+                    'score_at_30min': 'score_30m',
+                    'score_at_60min': 'score_60m',
+                }
+
+                for source_col, target_col in score_column_map.items():
+                    if source_col in features_df.columns:
+                        features_df[target_col] = features_df[source_col]
+
+                if 'score_5m' not in features_df.columns:
+                    features_df['score_5m'] = 0.0
+                if 'score_30m' not in features_df.columns:
+                    features_df['score_30m'] = features_df['score_5m']
+
+                features_df['velocity_5_to_30m'] = (
+                    features_df['score_30m'] - features_df['score_5m']
+                ) / 25.0
+                features_df['velocity_5_to_30m'] = (
+                    features_df['velocity_5_to_30m']
+                    .replace([np.inf, -np.inf], np.nan)
+                    .fillna(0.0)
+                )
+
+                # Alias commonly referenced snapshot columns and derived velocity
+                for minutes in (5, 15, 30, 60):
+                    src_col = f'score_at_{minutes}min'
+                    alias = f'score_{minutes}m'
+                    if src_col in features_df.columns:
+                        features_df[alias] = features_df[src_col].astype(float)
+
+                if 'score_at_5min' in features_df.columns and 'score_at_30min' in features_df.columns:
+                    score_5 = features_df['score_at_5min'].astype(float)
+                    score_30 = features_df['score_at_30min'].astype(float)
+                    velocity = (score_30 - score_5) / 25.0
+                    features_df['velocity_5_to_30m'] = velocity.fillna(0.0)
+
+                # Ensure a 60-minute score column is always available
+                if 'score_60m' not in features_df.columns:
+                    base_60 = features_df.get('score_at_60min')
+                    if base_60 is not None:
+                        features_df['score_60m'] = base_60.astype(float)
+                features_df['score_60m'] = features_df.get('score_60m', pd.Series(index=features_df.index, dtype=float))
+                features_df['score_60m'] = features_df['score_60m'].fillna(features_df.get('score', 0)).astype(float)
         
         # Save features
         output_path = Path(output)

@@ -11,6 +11,10 @@ reddit_config.ini
 .cursorrules
 .windsurfrules
 .clinerules
+.copilot/
+.cursor/
+.codeium/
+.aider*
 
 # Python
 __pycache__/
@@ -131,6 +135,12 @@ data/processed/
 *.sqlite
 *.sqlite3
 
+# Generated presentation artifacts
+outputs/presentations/
+docs/figures/generated_*.png
+*.pptx
+docs/references/*.pdf
+
 # Large files and datasets
 *.zip
 *.tar.gz
@@ -147,6 +157,9 @@ models/*.pth
 # Logs
 logs/
 *.log
+
+# Local writing artifacts
+*.docx
 
 # OS generated files
 .DS_Store
@@ -184,3 +197,4 @@ credentials.*
 
 # Project specific
 PROJECT_STATUS.md
+Title_Lift_*.html

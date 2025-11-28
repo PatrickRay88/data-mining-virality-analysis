@@ -20,6 +20,7 @@ requests>=2.31.0
 spacy>=3.6.0
 vaderSentiment>=3.3.2
 textstat>=0.7.3
+sentence-transformers>=2.2.2
 
 # Visualization
 matplotlib>=3.7.0

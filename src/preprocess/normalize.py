@@ -28,7 +28,7 @@ class DataNormalizer:
         Returns:
             DataFrame with normalized schema
         """
-        normalized = pd.DataFrame()
+        normalized = pd.DataFrame(index=df.index)
         
         # Core fields
         normalized['platform'] = 'reddit'
@@ -36,14 +36,17 @@ class DataNormalizer:
         normalized['title'] = df['title']
         normalized['created_timestamp'] = df['created_utc']
         normalized['score'] = df['score']
-        normalized['comment_count'] = df['num_comments']
+        if 'num_comments' in df.columns:
+            normalized['comment_count'] = df['num_comments'].fillna(0)
+        else:
+            normalized['comment_count'] = 0
         normalized['author_hash'] = df['author'].apply(self._hash_author)
         
         # Platform-specific fields
-        normalized['upvote_ratio'] = df['upvote_ratio']
-        normalized['subreddit'] = df['subreddit']
-        normalized['is_self_post'] = df['is_self']
-        normalized['url'] = df['url']
+        normalized['upvote_ratio'] = df.get('upvote_ratio', np.nan)
+        normalized['subreddit'] = df.get('subreddit', '')
+        normalized['is_self_post'] = df.get('is_self', False)
+        normalized['url'] = df.get('url', '')
         normalized['domain'] = df.get('domain', '')
         
         # Optional fields
@@ -69,7 +72,7 @@ class DataNormalizer:
         Returns:
             DataFrame with normalized schema
         """
-        normalized = pd.DataFrame()
+        normalized = pd.DataFrame(index=df.index)
         
         # Core fields
         normalized['platform'] = 'hackernews'

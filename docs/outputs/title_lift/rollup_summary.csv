@@ -1,0 +1,4 @@
+Track,Pairwise Accuracy,Test RMSE,Test R2,Notes
+Stage B baseline (OLS residual),0.5497898055701524,1.178278899563301,-0.027639393499084175,Original linear residual workflow used in v3/v4 reports.
+Stage B non-linear (MLP Regressor),,1.0744743877125509,0.011659951367417487,Cross-validated feed-forward network that improved RMSE but lacked ranking gains.
+Stage B contextual embeddings (MPNet + PCA64 + Ridge),0.5999868568048893,1.1896995316153904,0.0084641240303307,Achieved the ≥0.60 pairwise accuracy target with minimal RMSE trade-off.
