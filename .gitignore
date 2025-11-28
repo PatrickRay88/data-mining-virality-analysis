@@ -198,3 +198,4 @@ credentials.*
 # Project specific
 PROJECT_STATUS.md
 Title_Lift_*.html
+bin/export_word_report.py

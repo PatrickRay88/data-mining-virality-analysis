@@ -1,16 +1,16 @@
 # Content Virality Analysis
 
-A data mining project that extends Weissburg 2022's research on content virality by analyzing Reddit and Hacker News data with enhanced features and residual-lift analysis.
+A data mining project that extends Weissburg 2022's research on content virality by analyzing Reddit data with enhanced features and residual-lift analysis. Hacker News integration remains planned future work—collectors exist, but no HN dataset is bundled or analyzed yet.
 
 ## Research Objectives
 
 This project replicates and extends Weissburg et al. (2022) "Judging a Book by Its Cover: Predicting the Marginal Impact of Title on Reddit Post Popularity" with three key enhancements:
 
 1. **Enhanced Features**: Time-based features (hour, weekday, recency), content-type classification, and author activity proxies beyond the original title-only focus
-2. **Cross-Platform Analysis**: Hacker News data integration to test title effect transferability across social media platforms
+2. **Cross-Platform Analysis (Planned)**: Hacker News collector scaffolding to test title effect transferability; data has not yet been collected or integrated
 3. **Residual-Lift Methodology**: Exposure-aware quality estimation followed by title-driven lift analysis, implementing the "ensemble-type model" approach suggested in their future work
 
-> **Research Question**: Do certain title features push Reddit posts above or below their "intrinsic quality" baseline, and how does this generalize across platforms?
+> **Research Question**: Do certain title features push Reddit posts above or below their "intrinsic quality" baseline on Reddit? Cross-platform generalization is deferred to future work pending Hacker News data collection.
 
 > **Academic Context**: This project implements methodological extensions explicitly suggested in Weissburg et al.'s future work section, combining their exposure-correction approach with cross-platform validation and enhanced feature engineering.
 
@@ -18,7 +18,7 @@ This project replicates and extends Weissburg et al. (2022) "Judging a Book by I
 
 ```
 ├── src/                    # Core Python package
-│   ├── ingest/            # API clients for Reddit and Hacker News
+│   ├── ingest/            # API clients for Reddit (plus Hacker News scaffolding)
 │   ├── preprocess/        # Feature engineering and data normalization
 │   ├── models/            # Quality modeling and residual-lift analysis
 │   └── utils/             # Shared utilities (time bins, calibration, evaluation)
@@ -57,7 +57,8 @@ This project replicates and extends Weissburg et al. (2022) "Judging a Book by I
    # Multiple subreddits in one run (repeat -s flag)
    python bin/collect_reddit.py -s technology -s science -s worldnews --days 30
 
-   python bin/collect_hn.py --days 30
+   # Optional future work (not executed in this repo snapshot)
+   # python bin/collect_hn.py --days 30
 
    # Continuous /new polling + 5/15/30/60 minute snapshots
    python bin/run_snapshot_collector.py -s technology -s science -s worldnews \
@@ -85,13 +86,13 @@ Model title-driven lift above/below quality baseline using linear and gradient-b
 ### Stage C - Natural Experiments (Optional)
 Analyze same-URL, different-title pairs for quasi-causal evidence.
 
-### Stage D - Cross-platform Transfer
-Test Reddit→HN and HN→Reddit model transferability.
+### Stage D - Cross-platform Transfer (Future Work)
+Collectors and modeling hooks are in place, but cross-platform transfer has not been executed because Hacker News data was not collected for this iteration.
 
 ## Data Collection Notes
 
 - **Reddit**: Uses PRAW API with rate limiting and early snapshot collection. `bin/run_snapshot_collector.py` polls `/new` feeds on a schedule, persists normalized slices, and records 5/15/30/60-minute score snapshots for exposure modeling.
-- **Hacker News**: Uses free JSON API for "newstories" stream
+- **Hacker News**: Collector script targets the JSON API for "newstories" stream, but no HN snapshots are included yet
 - **Ethics**: Public data only, anonymized authors, TOS compliant
 - **Storage**: All data stored as Parquet files for efficient analysis
 
