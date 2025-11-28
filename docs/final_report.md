@@ -2,17 +2,18 @@
 
 ## Executive Summary
 - **Stage A (intrinsic quality)**: Ordinary Least Squares still explains 58% of log-score variance on the November 2025 holdout (test RMSE 1.19, $R^2$ 0.58). Penalized ElasticNet reproduces the Weissburg setup with similar accuracy ($R^2$ 0.53) while shrinking unstable coefficients.
-- **Stage B (title lift residual)**: Title-only OLS remains brittle (test $R^2$ −0.03). Among non-linear learners trained on the Stage A residual (`R`), a shallow MLP regressor fares best with RMSE 1.07, MAE 0.80, and a modest positive $R^2$ of 0.012. Tree ensembles (Random Forest, Gradient Boosting, LightGBM) and kernel SVMs fail to surpass this bar, underscoring how little incremental variance titles contribute.
+- **Stage B (title lift residual)**: Title heuristics alone remain brittle (test $R^2$ −0.03). Embedding sweeps now surface a small positive lift — ridge regression on `all-mpnet-base-v2` embeddings with PCA64 yields test RMSE 1.1897, $R^2$ 0.0085, and pairwise accuracy 0.60, while the heuristic-only non-linear MLP baseline reaches $R^2$ 0.012.
 - **Diagnostics**: Permutation importance and tree importances agree that sentiment ratios, clickbait flags, and title length heuristics dominate whatever signal exists. Residual histograms remain centered near zero with heavy tails, indicating limited but non-negligible systematic lift.
-- **Deliverables**: A new analysis notebook (`docs/title_lift_analysis.ipynb`) and optional HTML export walk through data audits, EDA, model training, statistical tests, and formatted tables so results are consumable without wading through raw Markdown.
+- **Deliverables**: A refreshed figure bundle (`docs/figures/`), updated markdowns, and the analysis notebook (`docs/title_lift_analysis.ipynb`) document the full pipeline so results stay reproducible without pulling local data.
 
 ## Data Sources and Feature Pipeline
-- **Collection**: Reddit (PRAW) and Hacker News snapshots gathered with the CLI tools in `bin/`, respecting API rate limits and using `.env` credentials.
+- **Collection**: Reddit snapshots gathered with the CLI tools in `bin/`, respecting API rate limits and using `.env` credentials. Hacker News scaffolding remains future work.
 - **Normalization**: `src/preprocess/normalize.py` aligns schemas, hashes author identifiers, and emits Parquet files with standardized feature names (e.g., `score_at_5`, `sentiment_compound`).
 - **Feature Engineering**:
   - Context and exposure covariates (posting hour buckets, subreddit aggregates, early velocity) power Stage A.
   - Title heuristics (length, token counts, punctuation, VADER sentiment, clickbait regex hits, entity counts) inform Stage B residual modeling.
 - **Artifacts**: `outputs/title_lift/stage_model_outputs.parquet` stores per-post targets (`y`), Stage A predictions, residuals `R`, and engineered title features used throughout this study.
+- **Availability**: `data/` stays untracked in Git to keep the repo lean; regenerate locally with the collectors or request a snapshot when collaborating.
 
 ## Baseline Stage A / Stage B Metrics
 Metrics pulled from `docs/stage_metrics.json` (baseline OLS) and `outputs/title_lift/stage_penalized_metrics.json` (ElasticNet replica):
@@ -26,6 +27,10 @@ Penalized ElasticNet Stage B     B      0.980     1.230    0.041   0.018
 ```
 
 The Stage B residual remains hard to predict with linear methods—test $R^2$ hovers around zero or negative across specification tweaks.
+
+![Residual overview](figures/residual_hist.png)
+
+*Stage A residual distribution remains centered with tighter spread post refresh.*
 
 ## Non-Linear Stage B Experiments
 We retrained models on the Stage A residual (`R`), removing leakage-prone fields (`score_*`, `yhat_A`, `title_lift_component`) and applying a unified preprocessing pipeline (median imputation, scaling, and one-hot encoding). A 70/15/15 temporal holdout mirrors the baseline split.
@@ -46,6 +51,12 @@ Observations:
 - LightGBM and the RBF SVM overfit validation folds without translating into holdout gains, implying the current feature space lacks the texture to reward more flexible kernels.
 - Residual spread remains wide (~1.06 standard deviation), emphasizing that titles rarely shift outcomes more than ~±1 log-score even when optimally predicted.
 
+### Transformer Embedding Sweep
+- `bin/run_stage_b_embeddings.py` now evaluates sentence-transformer representations (`all-MiniLM-L6-v2`, `all-mpnet-base-v2`) with optional PCA compression.
+- Best configuration: ridge regressor on `all-mpnet-base-v2` embeddings, PCA=64, batch size 32 → **test RMSE 1.1897**, **MAE 0.897**, **$R^2$ 0.0085**, **pairwise accuracy 0.600**.
+- Embeddings consistently beat TF-IDF + SVD (`stage_b_enhancements.json`, test $R^2$ −0.037) yet still trail the heuristic-only MLP in $R^2$, underscoring the shallow signal available from titles alone.
+- Over-sized MLPs collapse (train RMSE <0.3, test RMSE >1.25), so future searches should focus on regularized linear or shallow non-linear heads over embeddings.
+
 ## Diagnostic Highlights (see notebook Sections 4 & 10)
 - Target audit confirms `yhat_A` tracks `y` closely (Stage A works), while `R` stays centered near zero with heavier tails during evening publishing windows.
 - Correlation heatmaps show limited linear relationships between title heuristics and residuals, motivating the non-linear exploration.
@@ -54,7 +65,7 @@ Observations:
 
 ## Limitations
 - The modeling target is the Stage A residual, so any Stage A misspecification cascades into Stage B; future iterations should consider joint modeling or Bayesian hierarchical approaches.
-- Title features remain surface-level heuristics. Without richer embeddings (e.g., transformer sentence encoders) the lift ceiling is low.
+- Title features remain surface-level heuristics. Even with transformer embeddings, the lift ceiling is low without better exposure instrumentation or content features.
 - Snapshot cadence (5/15/30/60 minutes) may miss ultra-fast viral posts, biasing residuals for high-velocity communities.
 - Reddit/HN deletions and moderation actions introduce censoring not currently modeled.
 
@@ -69,4 +80,4 @@ Observations:
 - **Notebook**: `docs/title_lift_analysis.ipynb` covers setup, EDA, model training, statistical testing, and reporting. Run it top-to-bottom to regenerate figures, tables, and cache files.
 - **HTML export**: Execute the final notebook cell to emit `docs/title_lift_analysis_report.html` for a clean, shareable view (requires `jupyter nbconvert`).
 - **Artifacts**: Cached splits (`outputs/title_lift/preprocessed_splits.joblib`) and data audit summary (`outputs/title_lift/data_audit_summary.json`) ensure consistent reuse.
-- **Environment**: Install dependencies via `pip install -r requirements.txt`, download `en_core_web_sm` for spaCy, and populate `.env` with Reddit credentials before rerunning collectors.
+- **Environment**: Install dependencies via `pip install -r requirements.txt`, download `en_core_web_sm` for spaCy, and populate `.env` with Reddit credentials before rerunning collectors. Contact the maintainer for Parquet snapshots if regeneration is impractical.
