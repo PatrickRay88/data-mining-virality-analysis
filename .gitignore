@@ -125,12 +125,7 @@ dmypy.json
 cython_debug/
 
 # Data Files (adjust based on your needs)
-data/*.parquet
-data/*.csv
-data/*.json
-data/*.jsonl
-data/raw/
-data/processed/
+data/
 *.db
 *.sqlite
 *.sqlite3
