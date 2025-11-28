@@ -1,63 +1,66 @@
 # Virality Analysis Research Overview
 
-## 1. Baseline Paper: Weissburg et al. (ICWSM 2022)
-- **Goal**: Decompose social news virality into intrinsic content quality vs. exposure dynamics.
-- **Data**: Reddit + Hacker News submissions with title text, timestamps, article bodies, and engagement metrics (score, comments, upvotes).
-- **Methodology**:
-  - Stage A models exposure-adjusted outcomes with contextual controls (timing, subreddit/platform, author history, early score snapshots).
-  - Stage B regresses Stage-A residuals on intrinsic/title features to quantify incremental lift.
-  - Iterative residual analysis isolates how headlines and platform effects boost or suppress reach beyond exposure.
-- **Key Findings**:
-  - Title framing (e.g., questions, numerics) yields measurable lift beyond exposure when averaged across platforms.
-  - Early exposure windows (first 60 minutes) strongly correlate with eventual virality.
-  - Cross-platform comparisons reveal platform-specific lift patterns even for similar content.
-- **Implications**:
-  - Clean feature partitioning is required to separate exposure from headline effects.
-  - High-quality temporal snapshots remain critical for early growth modeling.
-  - Interpretable models (elastic nets, GAMs) surface actionable headline patterns.
+_Last updated: 2025-11-28_
 
-## 2. Current Project Scope (Reddit Multi-Subreddit Phase)
-- **Target Platform**: 11 technology-adjacent subreddits (e.g., r/technology, r/politics, r/worldnews, r/energy) collected via authenticated Reddit API (`.env`-backed PRAW).
-- **Data Assets**:
-  - `data/features.parquet`: harmonized Reddit feature table (13,395 posts, 90+ engineered columns) produced by `bin/make_features.py`.
-  - `outputs/title_lift/stage_model_outputs.parquet`: Stage A/B predictions, residuals, and title features for reporting.
-  - `docs/stage_metrics.json`: persisted metrics + calibration artifacts from the latest Stage A/B run.
-  - Note: `data/` is ignored in Git; regenerated locally or shared on request to keep the repo lightweight.
-- **Research Question** (phase-specific):
-  - "How much incremental lift do Reddit headlines provide after accounting for exposure controls across technology-focused communities?"
+## Project At A Glance
+- Focus: quantify Reddit title lift while separating intrinsic quality (Stage A) from headline effects (Stage B) across 11 technology-adjacent subreddits
+- Sample: 13,395 posts collected between 2025-09-28 and 2025-11-18 with complete 5/15/30/60 minute exposure snapshots
+- Outcomes: log-transformed 60-minute score (`y = log1p(score_60m)`) with Stage A residual (`R`) as the Stage B target
+- Toolchain: Python 3.11 virtualenv, Click CLIs under `bin/`, modeling utilities under `src/models/`, artifacts persisted in `outputs/title_lift/`
+- Key references: Weissburg et al. (ICWSM 2022) baseline, Stage A/B replication, and expanded embedding experiments documented in `Title_Lift_Pipeline.ipynb`
 
-## 3. Completed Work
-- End-to-end ingest + normalization for 11 subreddits, including hashed authors and subreddit-level aggregates.
-- Feature engineering covering temporal flags, early velocity proxies, author frequency, and standardized title attributes (sentiment, readability, clickbait heuristics, entity counts).
-- Stage A OLS baseline (context-only) reaching **train RMSE 0.96 / R² 0.876** and **test RMSE 1.19 / R² 0.577** on log score targets (`docs/stage_metrics.json`).
-- Stage B ElasticNet residual model (title heuristics) delivering **test RMSE 1.18 / R² −0.028** with pairwise accuracy ≈0.55; LightGBM and OLS corroborate the weak headline signal.
-- Subreddit diagnostics still show small positive lift (≤0.08 R²) in best segments (e.g., r/energy) and negative lift for r/business and r/technews (`docs/findings.md`).
-- Added `bin/run_stage_b_enhancements.py` for sandboxing richer headline models (TF-IDF n-grams + additional heuristics) without touching the core pipeline; baseline run mirrors Stage A split for apples-to-apples tracking.
-- Added `src/models/stage_penalized.py` + `bin/run_stage_penalized.py`, an ElasticNet-based replica of Weissburg et al.'s penalized workflow (Stage A test RMSE 1.26 / R² 0.53; Stage B test RMSE 1.23 / R² 0.018).
-- Launched `bin/run_stage_b_embeddings.py` + `stage_b_embedding_search_v2` to evaluate sentence-transformer embeddings; best ridge + `all-mpnet-base-v2` + PCA64 configuration achieves **test RMSE 1.1897 / R² 0.0085** and pairwise accuracy 0.60.
-- Exported updated diagnostics and plots to `docs/figures/` (residual histograms, heatmaps, embedding leaderboards) for quick review.
+## Data Collection & Snapshot Instrumentation
+- Reddit collectors (`bin/collect_reddit.py`, `bin/run_snapshot_collector.py`) authenticate via `.env` (`REDDIT_CLIENT_ID/SECRET/USER_AGENT`) and stream `/new` along with periodic `/top` backfills
+- `run_snapshot_collector.py` pairs with `bin/run_snapshot_collector_week.ps1` to run a 7-day loop (300 second cadence) that captures 5/15/30/60 minute score, comment, and upvote ratio snapshots; state is persisted in `data/state/reddit_snapshot_state.parquet`
+- Subreddits covered: `technology`, `science`, `worldnews`, `business`, `economy`, `space`, `futurology`, `gadgets`, `energy`, `technews`, `politics`; each loop writes normalized slices (`reddit_stream_*.parquet`) and aligned snapshot files (`data/snapshots/reddit_snapshots_*.parquet`)
+- Reddit API helper (`src/ingest/reddit_client.py`) enforces polite rate limiting, retries, and field normalization; `snapshot_manager.py` tracks due intervals, tolerances (±2 minutes), and pruning grace windows (120 minutes)
+- Hacker News scaffolding (`bin/collect_hn.py`, `src/ingest/hn_client.py`) mirrors the architecture but remains optional in this phase; cross-platform hooks are ready once more data is ingested
 
-## 4. Next Action Plan
-1. **Exposure Instrumentation**
-  - Expand use of `bin/run_snapshot_collector.py` with `--snapshots` to capture dense 5/15/30/60 minute snapshots; backfill the feature pipeline once coverage improves.
-2. **Segmented Residual Modeling**
-  - Fit Stage B per subreddit (or clustered communities) where lift is mildly positive; report whether localized headline norms help.
-3. **Semantic Enrichment**
-  - Extend embedding sweeps (contrastive/text-davinci-style encoders, hybrid heuristic+embedding features) and compare against the current ridge baseline.
-4. **Explainability & Reporting**
-  - Run SHAP/permutation diagnostics on best-performing models, keep `docs/findings.md`, `docs/final_report.md`, and this overview synchronized, and note data availability expectations for collaborators.
+## Normalization, Storage, and Provenance
+- `DataNormalizer` (`src/preprocess/normalize.py`) harmonizes raw API payloads into a unified schema, hashes authors via SHA256-8 to preserve privacy, stamps platform/subreddit metadata, and exposes Parquet IO helpers
+- All raw Parquet assets live under `data/` with timestamped filenames (`reddit_<subreddit>_<ISO>.parquet`, `hackernews_<type>_<ISO>.parquet`) to support reproducible reruns; directory is `.gitignore`d and shared on request
+- Snapshot alignment uses `SnapshotConfig` and `SnapshotStateManager` to merge newly seen IDs, mark collected intervals, and prune stale posts; ingest logs are streamed to `logs/snapshot_run_<timestamp>.log`
+- Feature-ready table: `bin/make_features.py` consolidates normalized slices, deduplicates `post_id`, and emits `data/features.parquet` with 90+ engineered columns; final modeling table resides in `outputs/title_lift/stage_model_outputs.parquet`
 
-## 5. Future Extensions (Deferred)
-- **Cross-Platform Expansion**: Re-introduce Hacker News via `bin/collect_hn.py`, align normalization, and compare lift patterns across platforms.
-- **Snapshot-Based Early Growth**: Automate long-running collectors with `--snapshots` to mirror Weissburg et al.'s exposure features.
-- **Causal Storytelling**: Explore A/B-like comparisons (similar content, different headlines) or counterfactual simulations once Stage B shows reliable lift.
+## Feature Factory Summary
+- Title features (`TitleFeatureExtractor`): length (`title_length`, `title_words`, `title_chars_per_word`), punctuation flags, capitalization ratios, numeric tokens, VADER sentiment scores, textstat readability, clickbait keyword/pattern counts, spaCy NER tallies (`person_entities`, `org_entities`, `date_entities`)
+- Context features (`ContextFeatureExtractor`): hour and weekday indicators, cyclical encodings (`hour_sin`, `hour_cos`), recency buckets (`is_very_new`, `log_age_hours`), content-type detection (`is_text_post`, `is_image_post`, `is_news_post`, `is_external_link`), author activity proxies (`author_post_count_log`, `is_frequent_poster`), subreddit aggregates merged during feature build
+- Early exposure metrics: dense snapshot alignment populates `score_5m`, `score_15m`, `score_30m`, `score_60m`, growth rates (`velocity_5_to_30m`, `early_momentum`, `sustained_growth`); fallback logic fills gaps with final score when snapshots missing (now zero cases after November reruns)
+- Quality-of-life columns: `collection_type`, `is_new_collection`, platform flags, hashed authors, domain heuristics, and Stage A predictions/residuals persisted for downstream notebooks
 
-## 6. Resources & References
-- Weissburg, G., Hohenstein, J., Zhang, A., & Shah, N. (2022). *Title Lift: Measuring Headline Impact on Social News*. ICWSM 2022.
-- Project scripts: `bin/collect_reddit.py`, `bin/make_features.py`, `bin/run_model_diagnostics.py`.
-- Feature modules: `src/preprocess/features_titles.py`, `src/preprocess/features_context.py`, `src/preprocess/normalize.py`.
-- Modeling entry point: `src/models/stage_modeling.py` (CLI + helper functions).
-- Environment setup: `.env` with Reddit credentials; see `.env.example`.
+## Modeling Methodology & Experiments
+- **Stage A (Exposure & Intrinsic Quality)**
+  - Baseline OLS (`docs/stage_metrics.json`): train RMSE 0.96 / R² 0.876, test RMSE 1.19 / R² 0.577 on `log1p(score_60m)` using temporal, author, subreddit, and early score features
+  - ElasticNet replica (`outputs/title_lift/stage_penalized_metrics.json`): test RMSE 1.26 / R² 0.527 with top coefficients from early velocity and subreddit dispersion, matching Weissburg et al.'s penalized setup
+  - Diagnostics across temporal quantiles (`docs/stage_model_diagnostics.json`) show test R² stability 0.54–0.58, residual skew dropping from 0.58 → 0.33 as snapshots densified
+- **Stage B (Title Lift Residual)**
+  - Heuristic ElasticNet (`docs/stage_metrics.json`): test RMSE 1.18 / R² −0.028, pairwise accuracy 0.55; dominant features include sentiment proportions, title length, and clickbait indicators
+  - Tree baseline (`stage_metrics.json.stage_b_tree`): LightGBM-style regressor test RMSE 1.176 / R² −0.024 with capitalization ratio leading splits; corroborates weak linear signal
+  - Penalized pipeline (`stage_penalized_metrics.json`): Stage B ElasticNet (same residual target) nudges test R² to 0.018 under stronger Stage A shrinkage
+  - TF-IDF + SVD enhancements (`outputs/title_lift/stage_b_enhancements.json`): test RMSE 1.217 / R² −0.037, reinforcing that bag-of-words alone underperforms heuristic baseline
+- **Embedding Sweep (`stage_b_embedding_search_v2/`)**
+  - Grid over `all-MiniLM-L6-v2` and `all-mpnet-base-v2`, PCA {64,128}, ridge/elastic net/MLP heads; ranked results stored in `search_summary.json`
+  - Best run: ridge + `all-mpnet-base-v2` + PCA64, batch 32 → test RMSE 1.1897, R² 0.0085, MAE 0.897, pairwise accuracy 0.600 (15,217 ordered pairs)
+  - Secondary configs (PCA128, MiniLM) cluster around test R² 0.002–0.008 with lower pairwise accuracy; MLP heads overfit (train RMSE <0.3, test RMSE >1.25)
+- **Non-Linear Heuristics (Notebook)**
+  - `Title_Lift_Pipeline.ipynb` Section 8 compares MLP, Random Forest, Gradient Boosting, SVR on Stage B residuals: MLP achieves test RMSE 1.074 / R² 0.012; trees hover near zero lift
+  - Notebook Sections 9–11 contain permutation importance, residual slicing, and HTML summary exported to `docs/title_lift_analysis_report.html`
 
----
-Keep this document updated as milestones are reached (Stage A modeling complete, residual insights captured, etc.). When resuming cross-platform analysis, revisit Sections 2 and 5 to expand scope and adjust timelines.
+## Evaluation & Diagnostics Assets
+- `docs/stage_model_diagnostics.json`: temporal split ladder (quantiles 0.6–0.8), blocked day-wise CV, bootstrap summaries (`docs/diagnostics/stage_model_bootstrap_records.csv`, `stage_model_bootstrap_summary.csv`), learning curves (`stage_model_learning_curve.csv`)
+- Residual inspection: `docs/top_residual_posts.csv`, `docs/bottom_residual_posts.csv`, residual distribution figures (`docs/figures/residual_hist.png`, `residual_by_hour.png`, `residual_heatmap.png`)
+- Embedding leaderboard: `docs/figures/embedding_search_top5.png`; HTML Sankey/flow diagrams under `docs/figures/title_lift_pipeline_*.html`
+- Data audit: `outputs/title_lift/data_audit_summary.json` confirms column set and target moments; `outputs/title_lift/rollup_summary.csv` aggregates per-stage metrics
+- Stage B coefficients and embeddings: `outputs/title_lift/stageB_coefs.csv`, `stage_b_embeddings.json`, `stage_b_enhancements.json`, embedding search folders (`stage_b_embedding_search/`, `_v2`, `_smoke`)
+
+## Deliverables & Reproducibility
+- Primary notebook: `Title_Lift_Pipeline.ipynb` (exploration, modeling, diagnostics); mirrored report HTML in `docs/title_lift_analysis_report.html`
+- Operational scripts: collectors + snapshot PS helper, feature builder, modeling runners (`bin/run_stage_b_embeddings.py`, `bin/run_stage_b_enhancements.py`, `bin/run_stage_penalized.py`, `bin/run_model_diagnostics.py`)
+- Outputs: modeling metrics JSON/CSV under `docs/` and `outputs/title_lift/`, figures in `docs/figures/`, logs in `logs/`
+- Setup checklist: `pip install -r requirements.txt`, `python -m spacy download en_core_web_sm`, populate `.env`, optionally schedule `run_snapshot_collector_week.ps1` inside Windows Task Scheduler or `Start-BitsTransfer`
+
+## Current Status & Next Steps
+- Stage A is production-ready for Reddit tech verticals with full snapshot coverage and stable diagnostics
+- Stage B shows modest lift (≤0.018 R² except for embedding ridge 0.0085), with r/energy, r/space, r/futurology exhibiting the highest localized gains (see `docs/findings.md` for per-subreddit table)
+- Pending work: cross-platform ingestion (Hacker News), segmentation experiments, explainability on embedding ridge model (SHAP/permutation), and causal counterfactual tests now that early exposure data is dense
+- Continue weekly snapshot runs, refresh features via `bin/make_features.py`, rerun `bin/run_model_diagnostics.py` post-refresh, and keep `docs/findings.md` + `docs/final_report.md` synchronized after major modeling cycles

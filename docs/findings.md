@@ -2,58 +2,43 @@
 
 _Last updated: 2025-11-28_
 
-## What's New Since 2025-11-03
-- Re-ran Stage A/B pipeline on the November 12 temporal split; refreshed metrics live in `docs/stage_metrics.json`
-- Launched sentence-transformer embedding sweeps (`stage_b_embedding_search_v2/`) that surface a small but positive Stage B lift (test R² ≈ 0.008, pairwise accuracy 0.60)
-- Added ridge-penalized Stage A + residual Stage B replica (`stage_penalized_metrics.json`) to mirror Weissburg et al.'s specification
-- Promoted figure bundle under `docs/figures/` for quick diagnostics and embedded them below for at-a-glance monitoring
-- Clarified that Parquet datasets stay local-only; regenerate via the collectors or request access when collaborating
+## Dataset & Pipeline Recap
+- Coverage: 13,395 Reddit submissions across 11 tech-adjacent communities with full 5/15/30/60 minute snapshot coverage (verified via `outputs/title_lift/stage_model_outputs.parquet`)
+- Inputs: harmonized tables from `bin/make_features.py`, title/context features from `src/preprocess/features_titles.py` and `src/preprocess/features_context.py`, snapshots merged from `data/snapshots/`
+- Targets: `y = log1p(score_60m)` for Stage A; Stage B regresses the saved residual `R = y - yhat_A`
+- Temporal split: 70/30 chronological boundary at 2025-11-12 00:33:19 UTC to respect deployment-style evaluation
+- Supporting artifacts: metrics in `docs/stage_metrics.json`, diagnostics ladder in `docs/stage_model_diagnostics.json`, residual exemplars in `docs/top_residual_posts.csv` and `docs/bottom_residual_posts.csv`
 
-## Data Snapshot
-- Source: `data/features.parquet` covering **13,395** Reddit submissions across 11 technology-adjacent subreddits (r/technology, r/science, r/worldnews, r/business, r/politics, r/economy, r/gadgets, r/futurology, r/space, r/energy, r/technews)
-- Target: \( y = \log(1 + \text{score}_{60m}) \) where `score_60m` backfills to final score when snapshots are missing
-- Split: 70% earliest posts for training, 30% hold-out by timestamp (temporal generalization); current split boundary: **2025-11-12 00:33:19 UTC**
-- Artifacts: `outputs/title_lift/stage_model_outputs.parquet` (per-post predictions) and `docs/stage_metrics.json` (metrics, calibration payload)
-- Availability: the `data/` directory is excluded from the repository; datasets are available on request or can be regenerated locally with the provided collectors
+## Stage A Quality Model
+|Model|Train RMSE|Train R²|Test RMSE|Test R²|Source|
+|---|---|---|---|---|---|
+|OLS (exposure controls + snapshots)|0.957|0.876|1.190|0.577|`docs/stage_metrics.json`|
+|ElasticNet (Weissburg replica)|1.001|0.864|1.258|0.527|`outputs/title_lift/stage_penalized_metrics.json`|
 
-## Stage A — Exposure / Intrinsic-Quality Model
-- Feature set: hour/day dummies, cyclical encodings, recency flags, author frequency logs, subreddit aggregates (volume, dispersion), early velocity proxies, collection flags (`is_new_collection`)
-- Baseline OLS (`docs/stage_metrics.json`): train RMSE **0.96**, train R² **0.876**; test RMSE **1.19**, test R² **0.577**
-- Penalized replica (`stage_penalized_metrics.json`): ElasticNet Stage A attains test RMSE **1.26**, test R² **0.527**, offering additional shrinkage while keeping accuracy within 5% of OLS
-- Residual distribution: mean **0.08**, σ **1.03**, skew **0.44** — tails narrowed compared with pre-November runs, indicating better calibration for high-variance subreddits
-- Calibration checks show subreddit intercepts and hour-of-day deltas staying within ±0.17 log-score, suggesting minimal temporal drift through mid-November
+- Feature signals: early velocity (`velocity_5_to_30m`), `log_score_5m`, subreddit dispersion (`subreddit_score_std`), and author engagement proxies dominate coefficient magnitudes
+- Residual summary (`docs/stage_metrics.json.residual_summary`): mean 0.077, σ 1.03, skew 0.44; improvements vs. October runs stem from denser snapshots
+- Diagnostics: temporal quantiles (0.6–0.8) in `docs/stage_model_diagnostics.json` keep Stage A test R² within 0.54–0.58 with shrinking skew as the split boundary moves forward
 
-## Visual Diagnostics
-![Residual distribution (Stage A)](figures/residual_hist.png)
+## Stage B Residual Models (Heuristics)
+- Baseline ElasticNet (title heuristics): test RMSE 1.178, test R² −0.028, pairwise accuracy 0.550 (`docs/stage_metrics.json`)
+- Gradient-boosted tree head: test RMSE 1.176, test R² −0.024; capitalization ratio, title length, sentiment components lead split importances
+- Penalized replica (paired with ElasticNet Stage A): test RMSE 1.230, test R² 0.018 (`outputs/title_lift/stage_penalized_metrics.json`); numbers align with Weissburg et al.'s reported lift after heavy shrinkage
+- Notebook non-linear baseline (MLP, `Title_Lift_Pipeline.ipynb` §8): test RMSE 1.074, test R² 0.012; forests/boosting trail with R² ≈ 0.0
 
-![Residuals by publish hour](figures/residual_by_hour.png)
+## Embeddings, TF-IDF, and Search Experiments
+|Experiment|Configuration|Test RMSE|Test R²|Pairwise|Artifact|
+|---|---|---|---|---|---|
+|Sentence transformer ridge|`all-mpnet-base-v2`, PCA64, ridge α∈{0.1,1,10}|1.1897|0.0085|0.600|`stage_b_embedding_search_v2/search_summary.json`|
+|Sentence transformer ridge (MiniLM)|`all-MiniLM-L6-v2`, PCA64, ridge|1.1944|0.0007|0.574|`stage_b_embedding_search_v2/search_summary.json`|
+|Sentence transformer ridge (MiniLM, no PCA)|`all-MiniLM-L6-v2`, no PCA, ridge|1.2009|−0.010|0.564|`outputs/title_lift/stage_b_embeddings.json`|
+|TF-IDF + SVD ElasticNet|500 vocab, 100 SVD comps|1.2168|−0.037|—|`outputs/title_lift/stage_b_enhancements.json`|
+|Heuristic MLP (notebook)|Single hidden layer 128|1.074|0.012|—|`Title_Lift_Pipeline.ipynb`|
 
-![Residual heatmap (subreddit × hour)](figures/residual_heatmap.png)
+- Embedding sweep takeaway: transformer features beat heuristics by pairwise ordering but yield marginal R² (≤0.009); PCA64 stabilizes ridge fits without inflating variance
+- Over-parameterized MLP heads (search grid) collapse with extreme train/test gaps, indicating limited residual signal despite richer embeddings
+- TF-IDF regression underperforms due to sparse titles and heavy regularization; no ranked pairs recorded for that run
 
-![Embedding search leaderboard](figures/embedding_search_top5.png)
-
-- Histograms confirm Stage A residuals remain centered with tighter spread after dummy expansion
-- Hourly boxplots highlight evening variance spikes that Stage A still under-explains
-- Subreddit/hour heatmap surfaces modest positive pockets (e.g., r/energy late afternoon) that Stage B attempts to capture
-- Embedding leaderboard shows the best ridge + `all-mpnet-base-v2` configuration delivering the top pairwise accuracy
-
-## Stage B — Title-Driven Residual Lift (Heuristic Features)
-- Inputs: standardized title features (length, punctuation, sentiment, readability, clickbait heuristics, entity counts) plus off-peak/weekend interactions
-- ElasticNet on residuals (`docs/stage_metrics.json`): train RMSE **0.95**, train R² **0.019**; test RMSE **1.18**, test R² **−0.028**
-- Pairwise ordering accuracy **0.55** on 15,224 evaluation pairs — marginally above random
-- LightGBM residual trees corroborate weak lift (test R² **−0.024**); top tree features remain capitalization ratio, title length, and VADER sentiment terms
-- Penalized pipeline (`stage_penalized_metrics.json`) nudges Stage B to test RMSE **1.23**, test R² **0.018**, echoing Weissburg et al.'s small positive increments under stronger Stage A shrinkage
-
-## Stage B — Embedding Sweep Highlights
-- Search grid (`stage_b_embedding_search_v2/search_summary.json`) spans `all-MiniLM-L6-v2` and `all-mpnet-base-v2`, optional PCA (64/128), and ridge/elasticnet/MLP regressors
-- Best configuration (ridge, `all-mpnet-base-v2`, PCA=64, batch size 32) reaches:
-  - test RMSE **1.1897**, test R² **0.0085**
-  - test MAE **0.897**
-  - pairwise accuracy **0.600** across 15,217 pairs
-- Sentence-transformer embeddings consistently outperform TF-IDF + SVD (`stage_b_enhancements.json`, test R² **−0.037**) but gains remain incremental
-- Over-parameterized MLP regressors overfit catastrophically (train RMSE <0.3, test RMSE >1.25), confirming that signal-to-noise is still low despite richer inputs
-
-## Per-Subreddit Residual Performance
+## Per-Community Residual Behavior
 |Subreddit|Count|Stage A RMSE|Stage A R²|Stage B RMSE|Stage B R²|Stage B Corr|
 |---|---|---|---|---|---|---|
 |Futurology|642|0.951|0.877|0.936|0.031|0.181|
@@ -68,22 +53,29 @@ _Last updated: 2025-11-28_
 |technology|1636|1.277|0.824|1.260|0.026|0.175|
 |worldnews|1846|1.217|0.760|1.212|0.008|0.089|
 
-- Stage A generalizes well within each community (R² ≥ 0.74)
-- Stage B lift stays modest even in best cases (r/energy R² ≈ 0.08) and turns negative for r/business, r/technews, reinforcing the need for richer semantics or segmentation
+- Communities with scientific/energy focus show the highest residual correlation (≤0.28) hinting at niche headline norms; business/technews trend negative
+- Per-hour residual heatmap (`docs/figures/residual_heatmap.png`) highlights late-afternoon pockets where Stage B modestly closes the gap
+
+## Residual Outliers & Distribution Checks
+- Top positive residuals (`docs/top_residual_posts.csv`) illustrate sensational political/world news posts exceeding Stage A expectations by >3 log points (e.g., score 33k posts during Oct 31 news cycle)
+- Bottom residuals (`docs/bottom_residual_posts.csv`) feature mid-score business pieces overestimated by Stage A, often with low engagement titles
+- Residual histogram (`docs/figures/residual_hist.png`) is centered near zero with heavy right tail; hourly violin (`docs/figures/residual_by_hour.png`) confirms higher evening variance
+- Pairwise evaluation: 15,224 ordered comparisons produce 0.55 accuracy for heuristics and 0.60 for best embedding run, demonstrating small but real ranking gains
 
 ## Alignment with Weissburg et al. (2022)
-- ✔ **Stage A (quality baseline)**: Exposure-aware regression with dense temporal controls mirrors the original framework; our accuracy now sits within the paper's reported 0.45–0.60 deviance explained band
-- ✔ **Stage B (title lift)**: Residual regressions match Weissburg's methodology; latest embedding run reaches a small positive test R² (≈0.008), comparable to their modest lift findings
-- ☐ **Early growth instrumentation**: Snapshot coverage is still sparse; extending the streaming collector remains the primary blocker before attempting causal lift experiments
+- Stage A deviance explained (≈0.58) matches the original 0.45–0.60 band once exposure controls and snapshots are dense
+- Stage B lift remains marginal; penalized pipeline’s positive 0.018 test R² sits inside Weissburg’s reported incremental gains, underscoring consistent difficulty of headline-only prediction
+- Snapshot instrumentation complete for all 13,395 posts, removing the prior blocker to causal counterfactual tests proposed in the paper’s follow-up work
 
-## Operational Next Steps
-1. **Snapshot depth**: Schedule `bin/run_snapshot_collector.py` with `--snapshots` for a multi-day window to densify 5/15/30/60 minute features before the next Stage A/B rerun
-2. **Residual segmentation**: Train per-subreddit (or cluster-based) residual models where Stage B shows mild lift (energy, space, futurology) to validate localized headline norms
-3. **Semantic enrichment**: Extend embedding sweeps to include contrastive or multilingual models and test hybrid feature sets (embeddings + heuristics)
-4. **Explainability**: Run SHAP or permutation tests on the best ridge embedding model to confirm which semantic axes drive the modest gains
-5. **Documentation cadence**: Keep this file, `docs/research_overview.md`, and `docs/final_report.md` in sync after each major pipeline rerun; note data availability for external collaborators
+## Figures & Artifacts Checklist
+- Residual distribution suite: `docs/figures/residual_hist.png`, `residual_by_hour.png`, `residual_heatmap.png`
+- Embedding leaderboard: `docs/figures/embedding_search_top5.png` with top-5 runs annotated
+- Flow visuals: `docs/figures/title_lift_pipeline_flow.html`, `title_lift_pipeline_sankey*.html` for presentations
+- Diagnostics tables: `docs/diagnostics/stage_model_bootstrap_summary.csv`, `stage_model_temporal_splits.csv`, `stage_model_blocked_cv.csv`
+- Notebook export: `docs/title_lift_analysis_report.html` for end-to-end reproducibility without local data
 
-## References
-- Weissburg, G., Hohenstein, J., Zhang, A., & Shah, N. (2022). *Title Lift: Measuring Headline Impact on Social News*. ICWSM
-- Project pipeline: `src/models/stage_modeling.py`, `bin/run_model_diagnostics.py`, `bin/run_stage_b_embeddings.py`, `bin/run_stage_penalized.py`
-- Metrics JSON: `docs/stage_metrics.json` (baseline), `outputs/title_lift/stage_penalized_metrics.json` (penalized replica), `outputs/title_lift/stage_b_embedding_search_v2/search_summary.json` (embedding sweep)
+## Discussion & Next Steps
+- Exposure modeling is mature; the limiting factor is residual variance dominated by platform dynamics and author effects rather than headline tokens
+- Embedding ridge confirms slight lift (pairwise 0.60) yet R² < 0.01, suggesting that richer semantic features alone cannot radically improve predictions without segmentation
+- Segmenting by community or temporal regime, plus SHAP/permutation analysis on the embedding ridge, should clarify whether title tone (sentiment_neg, entity counts) drives the limited gains
+- Next actions: maintain weekly snapshot schedule, extend embedding search to contrastive/multilingual encoders, trial per-subreddit Stage B fits, and prepare causal counterfactual experiments now that exposure coverage is complete
