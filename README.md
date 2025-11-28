@@ -24,7 +24,7 @@ This project replicates and extends Weissburg et al. (2022) "Judging a Book by I
 │   └── utils/             # Shared utilities (time bins, calibration, evaluation)
 ├── notebooks/             # Jupyter notebooks for exploration and visualization
 ├── bin/                   # CLI entry points for data collection and modeling
-├── data/                  # Raw and processed data storage (Parquet format)
+├── data/                  # Local raw/processed data (omitted from repo; available on request)
 └── tests/                 # Unit tests for core functionality
 ```
 
@@ -95,6 +95,7 @@ Collectors and modeling hooks are in place, but cross-platform transfer has not 
 - **Hacker News**: Collector script targets the JSON API for "newstories" stream, but no HN snapshots are included yet
 - **Ethics**: Public data only, anonymized authors, TOS compliant
 - **Storage**: All data stored as Parquet files for efficient analysis
+- **Availability**: Datasets are excluded from version control; request access or regenerate via the collectors
 
 ## Key Features
 
