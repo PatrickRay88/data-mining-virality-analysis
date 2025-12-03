@@ -136,6 +136,13 @@ docs/figures/generated_*.png
 *.pptx
 docs/references/*.pdf
 
+# Generated reports and diagnostics
+docs/title_lift_final_report*.docx
+docs/outputs/
+docs/figures/word_report/
+docs/figures/diagnostics/
+outputs/
+
 # Large files and datasets
 *.zip
 *.tar.gz

@@ -276,7 +276,12 @@ def _write_tables(report: Dict[str, object], tables_dir: Path) -> None:
         rows: List[Dict[str, object]] = []
         for key, value in bootstrap_summary.items():
             if isinstance(value, dict):
-                rows.append({"metric": key, **value})
+                row: Dict[str, object] = {"metric": key}
+                mean_value = value.get("mean")
+                if mean_value is not None:
+                    row["value"] = mean_value
+                row.update(value)
+                rows.append(row)
             else:
                 rows.append({"metric": key, "value": value})
         pd.DataFrame(rows).to_csv(
