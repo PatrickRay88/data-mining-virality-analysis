@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Run penalized Stage A/B models inspired by Weissburg et al. (2022).
 
+Run with::
+
+    python -m src.cli.run_stage_penalized --data data/features.parquet
+
 This CLI leaves the core pipeline untouched while fitting ElasticNet-based
 Stage A (exposure controls) and Stage B (headline lift) models in parallel for
 side-by-side comparison.
@@ -9,11 +13,7 @@ side-by-side comparison.
 from __future__ import annotations
 
 import argparse
-import os
-import sys
 from pathlib import Path
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.models.stage_penalized import (
     PenalizedConfig,

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """CLI for Stage B enhancement experiments.
 
+Run with::
+
+    python -m src.cli.run_stage_b_enhancements --stage-outputs outputs/title_lift/stage_model_outputs.parquet
+
 This script loads the existing stage model outputs, augments title features,
 fits an ElasticNet residual model with TF-IDF n-grams, and reports metrics.
 It writes results to JSON (and optional CSV of top coefficients) without
@@ -10,12 +14,7 @@ modifying the primary Stage A/B pipeline artifacts.
 from __future__ import annotations
 
 import argparse
-# Ensure project root on sys.path
-import os
-import sys
 from pathlib import Path
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.models.stage_b_enhancements import (
     StageBExperimentConfig,

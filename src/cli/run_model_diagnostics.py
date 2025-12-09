@@ -1,10 +1,12 @@
-import os
-import sys
+"""Generate Stage A/B diagnostics artifacts.
+
+Run with:
+    python -m src.cli.run_model_diagnostics --data data/features.parquet
+"""
+
 from pathlib import Path
 
 import click
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.models.model_diagnostics import generate_diagnostics_report
 

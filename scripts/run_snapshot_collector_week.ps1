@@ -41,7 +41,7 @@ if (-not (Test-Path $LogDirectory)) {
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $logFile = Join-Path $LogDirectory "snapshot_run_$timestamp.log"
 
-$arguments = @("bin/run_snapshot_collector.py")
+$arguments = @("-m", "src.cli.run_snapshot_collector")
 foreach ($sub in $Subreddits) {
     $arguments += "-s"
     $arguments += $sub

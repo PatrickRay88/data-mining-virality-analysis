@@ -8,10 +8,57 @@
 │   ├── models/            # Quality modeling and residual-lift analysis
 │   └── utils/             # Shared utilities (time bins, calibration, evaluation)
 ├── notebooks/             # Jupyter notebooks for exploration and visualization
-├── bin/                   # CLI entry points for data collection and modeling
+├── src/cli/               # CLI entry points for data collection and modeling
 ├── data/                  # Local raw/processed data (omitted from repo; available on request)
-└── tests/                 # Unit tests for core functionality
+└── scripts/               # Automation helpers (PowerShell wrappers, etc.)
 ```
+
+## Quick Start
+
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/PatrickRay88/virality-analysis.git
+   cd virality-analysis
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   python -m spacy download en_core_web_sm
+   ```
+
+3. **Configure API Access**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Reddit API credentials
+   # Get credentials at: https://www.reddit.com/prefs/apps
+   ```
+
+4. **Collect Data**:
+   ```bash
+   # Single subreddit
+   python -m src.cli.collect_reddit --subreddit technology --days 30
+
+   # Multiple subreddits in one run (repeat -s flag)
+   python -m src.cli.collect_reddit -s technology -s science -s worldnews --days 30
+
+   # Optional future work (not executed in this repo snapshot)
+   # python -m src.cli.collect_hn --days 30
+
+   # Continuous /new polling + 5/15/30/60 minute snapshots
+   python -m src.cli.run_snapshot_collector -s technology -s science -s worldnews \
+       --new-limit 75 --loop-seconds 300
+   ```
+
+5. **Feature Engineering**:
+   ```bash
+   python -m src.cli.make_features
+   ```
+
+6. **Explore Results**:
+   ```bash
+   jupyter notebook notebooks/01_data_exploration.ipynb
+   ```
 
 ## Research Pipeline
 
@@ -23,7 +70,7 @@ Model title-driven lift above/below quality baseline using linear and gradient-b
 
 ## Data Collection Notes
 
-- **Reddit**: Uses PRAW API with rate limiting and early snapshot collection. `bin/run_snapshot_collector.py` polls `/new` feeds on a schedule, persists normalized slices, and records 5/15/30/60-minute score snapshots for exposure modeling.
+- **Reddit**: Uses PRAW API with rate limiting and early snapshot collection. `python -m src.cli.run_snapshot_collector` polls `/new` feeds on a schedule, persists normalized slices, and records 5/15/30/60-minute score snapshots for exposure modeling.
 - **Hacker News**: Collector script targets the JSON API for "newstories" stream, but no HN snapshots are included yet
 - **Ethics**: Public data only, anonymized authors, TOS compliant
 - **Storage**: All data stored as Parquet files for efficient analysis

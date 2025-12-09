@@ -1,6 +1,6 @@
 """Export a human-readable dataset for course submission.
 
-This CLI loads the feature-engineered table produced by ``bin/make_features.py``
+This CLI loads the feature-engineered table produced by ``python -m src.cli.make_features``
 and emits a trimmed CSV with descriptive column names and derived growth
 metrics. The output is meant for human review (e.g., sharing with faculty)
 so it prioritises readability over model-ready structure.
@@ -11,14 +11,13 @@ from __future__ import annotations
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
+
 import click
 import pandas as pd
-
 
 DEFAULT_INPUT = Path("data/features.parquet")
 DEFAULT_OUTPUT = Path("docs/title_lift_human_readable.csv")
 
-# Columns we prefer to surface (will keep the subset that exists in the input).
 PREFERRED_COLUMNS: tuple[str, ...] = (
     "platform",
     "post_id",
@@ -105,7 +104,6 @@ DAY_LABELS = {
 
 
 def _load_table(input_path: Path) -> pd.DataFrame:
-    """Read parquet/csv; fallback to sibling extensions if necessary."""
     candidates: list[Path] = []
     if input_path.exists():
         candidates.append(input_path)
@@ -131,20 +129,17 @@ def _select_columns(df: pd.DataFrame) -> pd.DataFrame:
 def _prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = _select_columns(df)
 
-    # Normalise timestamps for readability.
     if "created_timestamp" in df.columns:
         created_series = df["created_timestamp"]
         numeric = pd.to_numeric(created_series, errors="coerce")
         if numeric.notna().any():
             max_abs = numeric.abs().max()
-            # Values on the order of 1e9 imply Unix seconds; larger magnitudes likely ns.
             unit = "s" if max_abs < 1e12 else "ns"
             created = pd.to_datetime(numeric, unit=unit, errors="coerce", utc=True)
         else:
             created = pd.to_datetime(created_series, errors="coerce", utc=True)
         df["created_timestamp"] = created.dt.strftime("%Y-%m-%d %H:%M:%S")
 
-    # Stage additional derived metrics when the underlying columns exist.
     if {"score_5m", "score_60m"}.issubset(df.columns):
         df["score_delta_60m"] = df["score_60m"] - df["score_5m"]
     if {"score_5m", "score_15m"}.issubset(df.columns):
@@ -155,16 +150,13 @@ def _prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     if "day_of_week" in df.columns and "day_of_week_label" not in df.columns:
         df["day_of_week_label"] = df["day_of_week"].map(DAY_LABELS)
 
-    # Apply user-friendly column names.
     rename_map = {col: new for col, new in COLUMN_RENAMES.items() if col in df.columns}
     df = df.rename(columns=rename_map)
 
-    # Convert binary indicators to boolean for readability.
     for col in BOOL_COLUMNS:
         if col in df.columns:
             df[col] = df[col].astype(bool)
 
-    # Order columns with metadata first, then metrics.
     preferred_order: list[str] = []
     for key in (
         "platform",
@@ -233,7 +225,6 @@ def _summarise(df: pd.DataFrame) -> None:
     help="Sort by creation time (newest first) when timestamp is available.",
 )
 def main(input_path: Path, output_path: Path, limit: int | None, sort_desc: bool) -> None:
-    """Generate the human-readable CSV."""
     try:
         df = _load_table(input_path)
     except FileNotFoundError as exc:
@@ -255,7 +246,6 @@ def main(input_path: Path, output_path: Path, limit: int | None, sort_desc: bool
 
 
 if __name__ == "__main__":
-    # Delegate to Click for CLI handling.
     try:
         main(standalone_mode=True)
     except click.ClickException as exc:  # pragma: no cover - user-facing error

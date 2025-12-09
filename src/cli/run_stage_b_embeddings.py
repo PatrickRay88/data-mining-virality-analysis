@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""CLI for Stage B embedding experiments."""
+"""CLI for Stage B embedding experiments.
+
+Run with::
+
+    python -m src.cli.run_stage_b_embeddings --stage-outputs outputs/title_lift/stage_model_outputs.parquet
+"""
 
 from __future__ import annotations
 
 import argparse
-import os
-import sys
 from pathlib import Path
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.models.stage_b_embeddings import (  # pylint: disable=wrong-import-position
     StageBEmbeddingConfig,

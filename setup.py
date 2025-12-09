@@ -56,7 +56,7 @@ def main():
     print(f"\n🎉 Setup completed!")
     print(f"\nNext steps:")
     print(f"1. Edit .env file with your Reddit API credentials")
-    print(f"2. Start collecting data: python bin/collect_reddit.py --subreddit technology")
+    print(f"2. Start collecting data: python -m src.cli.collect_reddit --subreddit technology")
     print(f"3. Explore data: jupyter notebook notebooks/01_data_exploration.ipynb")
     
 
